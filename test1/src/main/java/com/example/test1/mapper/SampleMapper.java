@@ -14,7 +14,7 @@ public interface SampleMapper {
 	// update, removeStuList; import, addStuList;	
 	
 
-	List<Student> selectStuList();//학생목록
+	List<Student> selectStuList(HashMap<String, Object> map);//학생목록
 	
 	void updateStu(HashMap<String, Object> map);//학생정보수정
 
@@ -22,5 +22,8 @@ public interface SampleMapper {
 	void deleteStu(HashMap<String, Object> map);
 	
 	void insertStu(HashMap<String, Object> map);
-}
 	
+	Student selectId(HashMap<String, Object> map);
+	
+}
+

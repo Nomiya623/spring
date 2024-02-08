@@ -7,10 +7,13 @@ import com.example.test1.model.Student;
 
 public interface SampleService {
 
-	List<Student> searchStuList(); //학생목록
+	List<Student> searchStuList(HashMap<String, Object> map); //학생목록
 	void editStu(HashMap<String, Object> map);//학생정보 수정
 	
 	void removeStu(HashMap<String, Object> map);
 	
 	void addStu(HashMap<String, Object> map);
+	
+	Student searchId(HashMap<String, Object> map);
+	
 }

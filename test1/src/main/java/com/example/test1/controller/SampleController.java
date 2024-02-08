@@ -38,7 +38,7 @@ public class SampleController {
 	public String searchStuList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Student> list = sampleService.searchStuList();
+		List<Student> list = sampleService.searchStuList(map);
 		resultMap.put("list", list);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
@@ -75,4 +75,13 @@ public class SampleController {
 		return new Gson().toJson(resultMap);
 	}
 	
+	@RequestMapping(value = "/stu/check.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String check(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		System.out.println(map.get("stuNo"));
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		Student s = sampleService.searchId(map);
+		resultMap.put("student", s);
+		return new Gson().toJson(resultMap);
+	}
 }

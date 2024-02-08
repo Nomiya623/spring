@@ -18,9 +18,9 @@ public class SampleServiceImpl implements SampleService{
 	SampleMapper sampleMapper;
 
 	@Override
-	public List<Student> searchStuList() {
+	public List<Student> searchStuList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return sampleMapper.selectStuList();
+		return sampleMapper.selectStuList(map);
 	}
 
 	@Override
@@ -39,6 +39,13 @@ public class SampleServiceImpl implements SampleService{
 	public void addStu(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		sampleMapper.insertStu(map);
+	}
+
+	@Override
+	public Student searchId(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		Student s = sampleMapper.selectId(map);
+		return s;
 	}
 	
 	

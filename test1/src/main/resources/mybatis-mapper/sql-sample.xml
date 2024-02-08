@@ -15,6 +15,7 @@
 		STU_HEIGHT,
 		STU_WEIGHT
 		FROM STUDENT
+		WHERE STU_NO LIKE '%' || #{keyword} || '%'
 	</select>
 
 	<update id="updateStu" parameterType="hashmap">
@@ -34,7 +35,13 @@
 
 	<insert id="insertStu" parameterType="hashmap">
 		INSERT INTO
-		STUDENT(STU_NO,STU_NAME, STU_DEPT, STU_GRADE, STU-GENDER)
+		STUDENT(STU_NO,STU_NAME, STU_DEPT, STU_GRADE, STU_GENDER)
 		VALUES(#{stuNo}, #{stuName}, #{stuDept}, #{stuGrade}, #{stuGender})
 	</insert>
+
+	<select id="selectId" parameterType="hashmap"
+		resultType="com.example.test1.model.Student">
+		SELECT * FROM STUDENT
+		WHERE STU_NO = #{stuNo}
+	</select>
 </mapper>

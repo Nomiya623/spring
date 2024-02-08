@@ -24,8 +24,11 @@
 </style>
 <body>
 	<div id="app">
+	<div>검색 : <input type ="text" v-model = "keyword">
+				<button @click="fnGetList">검색</button>
+	</div> <!-- 학번검색 -->
+	
 	<div>학년 : <input type ="text" v-model = "grade"></div>
-		
 		<table border="1">
 			<tr>
 				<th>학번</th>
@@ -59,12 +62,13 @@
 		el : '#app',
 		data : {
 			list : [],
-			grade : ""
+			grade : "",
+			keyword : ""
 		},
 		methods : {
 			fnGetList : function() {
 				var self = this;
-				var nparmap = {};
+				var nparmap = { keyword : self.keyword };
 				$.ajax({
 					url : "/stu/list.dox",
 					dataType : "json",
