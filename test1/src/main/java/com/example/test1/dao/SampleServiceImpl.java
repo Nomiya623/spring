@@ -34,6 +34,12 @@ public class SampleServiceImpl implements SampleService{
 		// TODO Auto-generated method stub
 		sampleMapper.deleteStu(map);
 	}
+
+	@Override
+	public void addStu(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		sampleMapper.insertStu(map);
+	}
 	
 	
 }

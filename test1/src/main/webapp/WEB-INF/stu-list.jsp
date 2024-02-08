@@ -24,7 +24,7 @@
 </style>
 <body>
 	<div id="app">
-	<div>학년 입력 : <input type ="text" v-model = "grade"></div>
+	<div>학년 : <input type ="text" v-model = "grade"></div>
 		
 		<table border="1">
 			<tr>

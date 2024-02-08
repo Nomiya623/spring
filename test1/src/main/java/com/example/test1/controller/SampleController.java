@@ -27,6 +27,12 @@ public class SampleController {
         return "/stu-list"; 
     }
 	
+	@RequestMapping("/stu-add.do") 
+    public String add(Model model) throws Exception{
+		
+        return "/stu-add"; 
+    }
+	
 	@RequestMapping(value = "/stu/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String searchStuList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -58,4 +64,15 @@ public class SampleController {
 		
 		return new Gson().toJson(resultMap);
 	}
+	
+	@RequestMapping(value = "/stu/add.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String add(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		System.out.println(map.get("stuNo"));
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		sampleService.addStu(map);
+		
+		return new Gson().toJson(resultMap);
+	}
+	
 }

@@ -20,6 +20,7 @@ public interface SampleMapper {
 
 
 	void deleteStu(HashMap<String, Object> map);
+	
+	void insertStu(HashMap<String, Object> map);
 }
-
 	

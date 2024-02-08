@@ -11,4 +11,6 @@ public interface SampleService {
 	void editStu(HashMap<String, Object> map);//학생정보 수정
 	
 	void removeStu(HashMap<String, Object> map);
+	
+	void addStu(HashMap<String, Object> map);
 }

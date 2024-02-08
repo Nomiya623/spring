@@ -20,7 +20,8 @@
 	<update id="updateStu" parameterType="hashmap">
 		UPDATE STUDENT
 		SET
-		STU_GRADE = #{stuGrade}
+		STU_GRADE
+		= #{stuGrade}
 		WHERE STU_NO = #{stuNo}
 	</update>
 
@@ -30,4 +31,10 @@
 		WHERE
 		STU_NO = #{stuNo}
 	</delete>
+
+	<insert id="insertStu" parameterType="hashmap">
+		INSERT INTO
+		STUDENT(STU_NO,STU_NAME, STU_DEPT, STU_GRADE, STU-GENDER)
+		VALUES(#{stuNo}, #{stuName}, #{stuDept}, #{stuGrade}, #{stuGender})
+	</insert>
 </mapper>
