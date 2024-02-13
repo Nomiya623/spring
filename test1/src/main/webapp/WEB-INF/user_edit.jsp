@@ -200,6 +200,7 @@ button:hover {
 					data : nparmap,
 					success : function(data) {
 						console.log(data.user);
+						self.user.name = data.user;
 
 					},
 				});
