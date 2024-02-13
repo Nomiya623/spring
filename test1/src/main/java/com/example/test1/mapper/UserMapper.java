@@ -10,5 +10,7 @@ import com.example.test1.model.User;
 public interface UserMapper {
 	User selectUser(HashMap<String, Object> map);
 	
+	void insertUser(HashMap<String, Object> map);
+	
 	
 }

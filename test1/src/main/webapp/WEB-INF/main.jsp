@@ -12,17 +12,8 @@
 </style>
 <body>
 	<div id="app">
-	<div>
-		아이디 : <input type = "text" v-model = "id">
-	</div>
-	<div>
-		비밀번호 : <input type = "password"  v-model = "pwd">
-	</div>
-	<div>
-		<button @click="login">로그인</button>
-		<button onclick="window.location.href='/join.do'">회원가입</button>
+		<button @click="fnUpdate">회원정보 수정</button>
 		<button>취소</button>
-	</div>
 	</div>
 </body>
 </html>
@@ -35,20 +26,23 @@
 			
 		},
 		methods : {
-			login : function() {
-				
+			fnSelectUser : function() {
 				var self = this;
-				var nparmap = {id : self.id, pwd: self.pwd};
+				var nparmap = {
+						id : self.user.id
+					};
+
 				$.ajax({
-					url : "login.dox",
+					url : "../join.dox",
 					dataType : "json",
 					type : "POST",
 					data : nparmap,
 					success : function(data) {
-						alert(data.message);
-						if(data.result == "success"){
-							location.href = "/stu-list.do";
-						}
+						alert("로그인");
+
+					},
+				});
+			}
 						
 					}
 				});

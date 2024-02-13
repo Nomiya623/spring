@@ -24,7 +24,7 @@
 </style>
 <body>
 	<div id="app">
-	<div>검색 : <input type ="text" v-model = "keyword">
+	<div>검색 : <input type ="text" v-model = "keyword"@keyup.enter="fnGetList">
 				<button @click="fnGetList">검색</button>
 	</div> <!-- 학번검색 -->
 	
