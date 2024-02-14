@@ -62,10 +62,10 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	if(data.result == "success"){
-                		alert("작성되었음");
+                		alert("저장되었습니다");
                 		location.href = "/boardList.do";
                 	} else {
-                		alert("오류 발생");
+                		alert("에러 발생");
                 	}
                 }
             }); 
