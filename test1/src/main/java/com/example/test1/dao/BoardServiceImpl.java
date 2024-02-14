@@ -25,4 +25,23 @@ public class BoardServiceImpl implements BoardService{
 		 return resultMap;
 	}
 
+	@Override
+	public HashMap<String, Object> searchBoardInfo(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		 HashMap<String, Object> resultMap = new  HashMap<String, Object>();
+		 Board board = boardMapper.selectBoardInfo(map);
+		 resultMap.put("info", board);
+		 resultMap.put("result", "success");
+		 return resultMap;
+	}
+
+	@Override
+	public boolean deleteBoard(Long boardNo) {
+		// TODO Auto-generated method stub
+        int rowsAffected = boardMapper.deleteBoard(boardNo);
+		return false;
+
+
+	}
+
 }

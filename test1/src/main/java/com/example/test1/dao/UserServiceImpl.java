@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService{
 				resultMap.put("message", user.getUserName() + "님 환영합니다!");
 				session.setAttribute("userId", user.getUserId());
 				session.setAttribute("userName", user.getUserName());
+				session.setAttribute("userStatus", user.getStatus());
 			} else {
 				// 패스워드가 다른 경우
 				resultMap.put("result", "fail");

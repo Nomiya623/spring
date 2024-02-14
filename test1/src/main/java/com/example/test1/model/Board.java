@@ -12,4 +12,7 @@ public class Board {
 	private String kind;
 	private String cdatetime;
 	private String udatetime;
+	
+	private String userName;
+	
 }
