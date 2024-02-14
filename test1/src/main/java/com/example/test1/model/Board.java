@@ -14,5 +14,4 @@ public class Board {
 	private String udatetime;
 	
 	private String userName;
-	
 }

@@ -21,12 +21,22 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
-	
-	
 	@RequestMapping("/boardList.do") 
     public String main(Model model) throws Exception{
 
         return "/board-list"; 
+    }
+	
+	@RequestMapping("/boardInsert.do") 
+    public String insert(Model model) throws Exception{
+
+        return "/board-insert"; 
+    }
+	
+	@RequestMapping("/boardUpdate.do") 
+    public String boardUpdate(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
+        return "/board-update"; 
     }
 	
 	@RequestMapping("/boardView.do") 
@@ -35,11 +45,9 @@ public class BoardController {
         return "/board-view"; 
     }
 	
-	
 	@RequestMapping(value = "/boardList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String searchUser(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		
+	public String boardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap = boardService.searchBoardList(map);
 		return new Gson().toJson(resultMap);
@@ -48,34 +56,32 @@ public class BoardController {
 	@RequestMapping(value = "/boardDetail.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String boardDetail(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap = boardService.searchBoardInfo(map);
 		return new Gson().toJson(resultMap);
 	}
 	
-	@RequestMapping(value = "/boardDelete.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String deleteBoard(@RequestParam HashMap<String, Object> map) throws Exception {
-        HashMap<String, Object> resultMap = new HashMap<>();
-        try {
-            boolean success = boardService.deleteBoard(Long.valueOf((String) map.get("boardNo")));
-            
-            if (success) {
-                resultMap.put("success", true);
-                resultMap.put("message", "게시글이 삭제되었습니다.");
-            } else {
-                resultMap.put("success", false);
-                resultMap.put("message", "게시글 삭제에 실패했습니다.");
-            }
-        } catch (NumberFormatException e) {
-            resultMap.put("success", false);
-            resultMap.put("message", "유효하지 않은 게시글 번호입니다.");
-        } catch (Exception e) {
-            resultMap.put("success", false);
-            resultMap.put("message", "게시글 삭제 중 오류가 발생했습니다.");
-        }
-        return new Gson().toJson(resultMap);
-    }
+	@RequestMapping(value = "/boardRemove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String boardRemove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.removeBoard(map);
+		return new Gson().toJson(resultMap);
+	}
 	
+	@RequestMapping(value = "/boardInsert.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String boardinsert(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.addBoard(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/boardUpdate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String boardUpdate(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.editBoard(map);
+		return new Gson().toJson(resultMap);
+	}
 }
