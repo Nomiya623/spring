@@ -1,12 +1,11 @@
 package com.example.test1.model;
 
-import lombok.Data;//getters setters 자동으로 만들어준다
+import lombok.Data;
 
 @Data
-//stu-no, stu_no 카멜 표기법으로 바꿔서 리턴
 public class Student {
-	private String stuNo;
-	private String stuName;
+	private String stuNo; // STU_NO
+	private String stuName; // STU_NAME
 	private String stuDept;
 	private String stuGrade;
 	private String stuClass;

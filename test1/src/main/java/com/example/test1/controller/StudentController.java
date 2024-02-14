@@ -18,71 +18,92 @@ import com.google.gson.Gson;
 
 @Controller
 public class StudentController {
-
+	
 	@Autowired
 	StudentService studentService;
+	
+	@RequestMapping("/student.do") 
+    public String main(Model model) throws Exception{
 
-	@RequestMapping("/student.do")
-	public String main(Model model) throws Exception {
+        return "/student-list"; // student-list.jsp
+    }
+	
+	@RequestMapping("/test.do") 
+    public String test(Model model) throws Exception{
 
-		return "/student-list"; // student-list.jsp
-	}
+        return "/test"; // test.jsp
+    }
+	
+	@RequestMapping("/first.do") 
+    public String first(Model model) throws Exception{
 
-	@RequestMapping("/test.do")
-	public String test(Model model) throws Exception {
+        return "/first"; // first.jsp
+    }
+	
+	@RequestMapping("/stuUpdate.do") 
+    public String stuUpdate(Model model) throws Exception{
 
-		return "/test"; // student-list.jsp
-	}
+        return "/stu-update"; // first.jsp
+    }
+	
+	@RequestMapping("/stuInfo.do") 
+    public String stuInfo(Model model) throws Exception{
 
-	@RequestMapping("/first.do")
-	public String first(Model model) throws Exception {
-
-		return "/first"; 
-	}
-
-	@RequestMapping("/stuUpdate.do")
-	public String stuUpdate(Model model) throws Exception {
-
-		return "/stu-update";
-	}
-	@RequestMapping("/stuInfo.do")
-	public String stuInfo(Model model) throws Exception {
-
-		return "/stuInfo"; 
-	}
-
-//	데이터 호툴
+        return "/stuInfo"; // first.jsp
+    }
+	
+	// 데이터 호출
 	@RequestMapping(value = "/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String searchBbsList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		System.out.println("test!!!");
+		
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<Student> list = studentService.searchStudentList(map);
 		resultMap.put("list", list);
 		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
-
+	
+	// 데이터 호출
+	@RequestMapping(value = "/test.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String test2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		System.out.println("안녕!!!!!!!!!!");
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		return new Gson().toJson(resultMap);
+	}
+	
+	// 데이터 호출
 	@RequestMapping(value = "/first.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String first(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		List<Emp> e = (List<Emp>) studentService.firstService();
+		List<Emp> e = studentService.firstService();
+		// resultMap => {};
 		resultMap.put("emp", e);
 		resultMap.put("message", "success");
+		// resultMap => {emp : e(object)};
 		return new Gson().toJson(resultMap);
 	}
-
-	@RequestMapping(value = "/stuInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	// 데이터 호출
+	@RequestMapping(value = "/stuUpdate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String stuInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		System.out.println("stu info");
-		List<Student> s = studentService.stuInfo();
+	public String stuUpdate(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		/* resultMap.put("list", s); */
-		resultMap.put("stuInfo", s);
-		resultMap.put("message", "success");
+		studentService.stuUpdate();
 		return new Gson().toJson(resultMap);
 	}
-
+	
+	// 데이터 호출
+		@RequestMapping(value = "/stuInfo.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+		@ResponseBody
+		public String stuInfo(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+			HashMap<String, Object> resultMap = new HashMap<String, Object>();
+			Student student = studentService.stuInfo();
+			resultMap.put("student", student);
+			resultMap.put("message", "success");
+			return new Gson().toJson(resultMap);
+		}
 }
+
+

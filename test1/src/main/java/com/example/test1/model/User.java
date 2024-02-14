@@ -1,23 +1,22 @@
 package com.example.test1.model;
 
-//stu-no, stu_no 카멜 표기법으로 바꿔서 리턴
 public class User {
-	private String userid;
-	private String pwd;
-	private String username;
-	private String phone;
-	private String gender;
-	private String hobby1;
-	private String hobby2;
-	private String hobby3;
-	private String cmt;
-	private String cnt;
-	private String status;
-	public String getUserid() {
-		return userid;
+	private String userId   ;
+	private String pwd      ;
+	private String userName ;
+	private String phone    ;
+	private String gender   ;
+	private String hobby1   ;
+	private String hobby2   ;
+	private String hobby3   ;
+	private String cmt      ;
+	private int cnt      	;
+	private String status   ;
+	public String getUserId() {
+		return userId;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getPwd() {
 		return pwd;
@@ -25,11 +24,11 @@ public class User {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getPhone() {
 		return phone;
@@ -67,10 +66,10 @@ public class User {
 	public void setCmt(String cmt) {
 		this.cmt = cmt;
 	}
-	public String getCnt() {
+	public int getCnt() {
 		return cnt;
 	}
-	public void setCnt(String cnt) {
+	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
 	public String getStatus() {
@@ -79,5 +78,4 @@ public class User {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 }

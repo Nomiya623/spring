@@ -8,9 +8,6 @@ import com.example.test1.model.User;
 
 @Mapper
 public interface UserMapper {
-	User selectUser(HashMap<String, Object> map);
-	
-	void insertUser(HashMap<String, Object> map);
-	
-	
+	User selectUser(HashMap<String, Object> map); // 로그인
+	void insertUser(HashMap<String, Object> map); // 회원가입
 }

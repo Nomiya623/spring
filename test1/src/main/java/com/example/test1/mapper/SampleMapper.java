@@ -5,25 +5,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
 
 @Mapper
 public interface SampleMapper {
-	//학생 목록
-	// update, removeStuList; import, addStuList;	
-	
-
-	List<Student> selectStuList(HashMap<String, Object> map);//학생목록
-	
-	void updateStu(HashMap<String, Object> map);//학생정보수정
-
-
-	void deleteStu(HashMap<String, Object> map);
-	
-	void insertStu(HashMap<String, Object> map);
-	
-	Student selectId(HashMap<String, Object> map);
-	
+	List<Student> selectStuList(HashMap<String, Object> map); // 학생 목록
+	void updateStu(HashMap<String, Object> map); // 학생 정보 수정
+	void insertStu(HashMap<String, Object> map); // 학생 추가
+	Student selectId(HashMap<String, Object> map); // 아이디 중복체크
 }
-

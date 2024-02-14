@@ -17,68 +17,50 @@ import com.google.gson.Gson;
 
 @Controller
 public class SampleController {
-
+	
 	@Autowired
 	SampleService sampleService;
 	
 	@RequestMapping("/stu-list.do") 
     public String stuInfo(Model model) throws Exception{
-		
+
         return "/stu-list"; 
     }
 	
 	@RequestMapping("/stu-add.do") 
     public String add(Model model) throws Exception{
-		
+
         return "/stu-add"; 
     }
 	
 	@RequestMapping(value = "/stu/list.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String searchStuList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		
+	public String searchBbsList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		List<Student> list = sampleService.searchStuList(map);
 		resultMap.put("list", list);
-		resultMap.put("result", "success");
 		return new Gson().toJson(resultMap);
 	}
 	
 	@RequestMapping(value = "/stu/edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String edit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		System.out.println(map.get("stuNo"));
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		sampleService.editStu(map);
-		
-		return new Gson().toJson(resultMap);
-	}
-	
-	
-	@RequestMapping(value = "/stu/remove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String remove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		System.out.println(map.get("stuNo"));
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		sampleService.removeStu(map);
-		
 		return new Gson().toJson(resultMap);
 	}
 	
 	@RequestMapping(value = "/stu/add.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String add(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		System.out.println(map.get("stuNo"));
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		sampleService.addStu(map);
-		
 		return new Gson().toJson(resultMap);
 	}
 	
 	@RequestMapping(value = "/stu/check.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String check(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		System.out.println(map.get("stuNo"));
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		Student s = sampleService.searchId(map);
 		resultMap.put("student", s);

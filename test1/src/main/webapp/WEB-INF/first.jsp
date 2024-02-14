@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-    <script src="js/jquery.js"></script>
+	<script src="js/jquery.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<title>첫번째 페이지</title>
 </head>
@@ -13,10 +13,10 @@
 <body>
 	<div id="app">
 		<div v-for="item in emp">
-		<div>사번: {{item.empNo}}</div>
-		<div>이름: {{item.eName}}</div>
-		<div>급여: {{item.sal}} </div>
-		</div>
+			<div>사번 : {{item.empNo}}</div>
+			<div>이름 : {{item.eName}}</div>
+			<div>급여 : {{item.sal}}</div>
+		</div> 
 	</div>
 </body>
 </html>
@@ -24,12 +24,11 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-    	//변수선언
-    	test : "Helo hell",
+    	// 변수 선언
     	emp : []
     }   
     , methods: {
-    	first : function(){
+    	list : function(){
             var self = this;
             var nparmap = {};
             $.ajax({
@@ -46,8 +45,7 @@ var app = new Vue({
     }   
     , created: function () {
     	var self = this;
-    	self.first();
-
+		self.list();
 	}
 });
 </script>

@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.test1.mapper.SampleMapper;
-import com.example.test1.mapper.StudentMapper;
-import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
 
 @Service
@@ -20,6 +18,7 @@ public class SampleServiceImpl implements SampleService{
 	@Override
 	public List<Student> searchStuList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
+		// 원래대로라면은 예외 처리
 		return sampleMapper.selectStuList(map);
 	}
 
@@ -27,12 +26,6 @@ public class SampleServiceImpl implements SampleService{
 	public void editStu(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		sampleMapper.updateStu(map);
-	}
-
-	@Override
-	public void removeStu(HashMap<String, Object> map) {
-		// TODO Auto-generated method stub
-		sampleMapper.deleteStu(map);
 	}
 
 	@Override
@@ -44,8 +37,7 @@ public class SampleServiceImpl implements SampleService{
 	@Override
 	public Student searchId(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		Student s = sampleMapper.selectId(map);
-		return s;
+		return sampleMapper.selectId(map);
 	}
 	
 	

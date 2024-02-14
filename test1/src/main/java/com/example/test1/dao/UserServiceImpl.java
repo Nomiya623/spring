@@ -1,24 +1,18 @@
 package com.example.test1.dao;
 
 import java.util.HashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.test1.mapper.SampleMapper;
-import com.example.test1.mapper.StudentMapper;
 import com.example.test1.mapper.UserMapper;
-import com.example.test1.model.Emp;
-import com.example.test1.model.Student;
 import com.example.test1.model.User;
 
 @Service
 public class UserServiceImpl implements UserService{
-	
-	
+
 	@Autowired
 	UserMapper userMapper;
 	
@@ -31,25 +25,26 @@ public class UserServiceImpl implements UserService{
 		User user = userMapper.selectUser(map);
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		if(user == null) {
-//			아이디가 없는 경우
+			// 아이디가 없는 경우
 			resultMap.put("result", "fail");
-			resultMap.put("message", "아이디가 존재하지 않습니다");
+			resultMap.put("message", "아이디가 존재하지 않습니다.");
 		} else {
-//			아이기 있는 경우
-			String pwd  = (String)map.get("pwd");
-//			원래 db접속해서 확인해야 함(보안상)
+			// 아이디가 있는 경우
+			String pwd = (String) map.get("pwd");
+			// 원래는 db접속(mybatis)해서 검색해야 됨(보안상 이유)
 			if(user.getPwd().equals(pwd)) {
-//				로그인 성공
+				// 로그인 성공
 				resultMap.put("result", "success");
-				resultMap.put("message", user.getUsername() + "아이디가 존재하지 않습니다");
-				session.setAttribute("userId", user.getUserid());
-				session.setAttribute("userName", user.getUsername());
+				resultMap.put("message", user.getUserName() + "님 환영합니다!");
+				session.setAttribute("userId", user.getUserId());
+				session.setAttribute("userName", user.getUserName());
 			} else {
-//				패스워드가 다를 경우
+				// 패스워드가 다른 경우
 				resultMap.put("result", "fail");
-				resultMap.put("message", "비밀번호가 일치하지 않습니다");
+				resultMap.put("message", "비밀번호가 일치하지 않습니다.");
 			}
 		}
+		
 		return resultMap;
 	}
 
@@ -57,7 +52,6 @@ public class UserServiceImpl implements UserService{
 	public void addUser(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		userMapper.insertUser(map);
-		
 	}
 
 	@Override
@@ -65,16 +59,13 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		User user = userMapper.selectUser(map);
-		
-		 if (user == null) {
-	           resultMap.put("message", "사용가능한 아이디입니다.");
-	           resultMap.put("result", "success");
-	        } else {
-	        	String pwd = (String) map.get("pwd");
-	        		
-	        	resultMap.put("message", "이미 사용중인 아이디입니다.");
-	        	resultMap.put("result", "fail");
-	        }
+		if(user == null) {
+			resultMap.put("message", "사용 가능한 아이디 입니다. \n사용하시겠습니까?");
+			resultMap.put("result", "success");
+		} else {
+			resultMap.put("message", "이미 사용중인 아이디 입니다.");
+			resultMap.put("result", "fail");
+		}
 		return resultMap;
 	}
 
@@ -85,10 +76,8 @@ public class UserServiceImpl implements UserService{
 		User user = userMapper.selectUser(map);
 		resultMap.put("user", user);
 		return resultMap;
-		}
-
-
 	}
-
 	
-
+	
+	
+}

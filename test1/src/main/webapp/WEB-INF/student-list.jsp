@@ -11,11 +11,7 @@
 </style>
 <body>
 	<div id="app">
-		<div v-for - "item in student">
-		<div>이름: {{stu.stuName}}</div>
-		<div>학번: {{stu.stuNo}}</div>
-		<div>학과: {{stu.stuDept}} </div>
-		</div>
+		안녕!
 	</div>
 </body>
 </html>
@@ -30,7 +26,7 @@ var app = new Vue({
             var self = this;
             var nparmap = {};
             $.ajax({
-                url:"stuPrint.dox",
+                url:"stuUpdate.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,

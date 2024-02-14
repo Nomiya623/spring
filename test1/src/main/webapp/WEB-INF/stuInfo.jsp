@@ -4,18 +4,17 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<jsp:include page="/layout/menu.jsp"></jsp:include>
+	<script src="js/jquery.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<title>첫번째 페이지</title>
 </head>
 <style>
 </style>
 <body>
 	<div id="app">
-		<div v-for = "item in student">
-		<div>이름 : {{list.stuName}}</div>
-		<div>학번 : {{list.stuNo}}</div>
-		<div>학과 : {{list.stuDept}} </div>
-		</div>
+		<div>이름 : {{student.stuName}}</div>
+		<div>학번 : {{student.stuNo}}</div>
+		<div>학과 : {{student.stuDept}}</div>
 	</div>
 </body>
 </html>
@@ -23,7 +22,7 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-		list : []
+		student : {}
     }   
     , methods: {
     	fnGetList : function(){
@@ -36,7 +35,7 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	console.log(data);
-	                self.list = data.list;
+	                self.student = data.student;
                 }
             }); 
         } 

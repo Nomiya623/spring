@@ -21,32 +21,27 @@ public class StudentServiceImpl implements StudentService{
 		// TODO Auto-generated method stub
 		return studentMapper.selectStudentList(map);
 	}
-	
+
 	@Override
 	public List<Emp> firstService() {
 		// TODO Auto-generated method stub
-		
-		
 		List<Emp> e = studentMapper.empList();
-	
 		return e;
-		/* return studentMapper.empList(); */		
-		
 	}
-	
 
 	@Override
 	public void stuUpdate() {
 		// TODO Auto-generated method stub
 		studentMapper.stuUpdate();
 	}
-	
+
 	@Override
-	public List<Student> stuInfo() {
-		List<Student> s = studentMapper.stuInfo();
+	public Student stuInfo() {
 		// TODO Auto-generated method stub
-		/* return studentMapper.stuInfo(); */
-		return s;
+		
+		return studentMapper.stuInfo();
 	}
 	
+	
+
 }

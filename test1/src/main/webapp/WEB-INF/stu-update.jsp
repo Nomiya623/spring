@@ -4,15 +4,15 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-    <script src="js/jquery.js"></script>
+	<script src="js/jquery.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<title>student page</title>
+	<title>첫번째 페이지</title>
 </head>
 <style>
 </style>
 <body>
 	<div id="app">
-	student name is updated
+		안녕하세요!
 	</div>
 </body>
 </html>
@@ -22,11 +22,11 @@ var app = new Vue({
     data: {
     }   
     , methods: {
-    	fnGetList : function(){
+    	list : function(){
             var self = this;
             var nparmap = {};
             $.ajax({
-                url:"stuUpdate.dox",
+                url:"first.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
@@ -37,8 +37,7 @@ var app = new Vue({
     }   
     , created: function () {
     	var self = this;
-    	self.fnGetList();
-
+		self.list();
 	}
 });
 </script>

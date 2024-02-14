@@ -9,9 +9,9 @@ import com.example.test1.model.Student;
 public interface StudentService {
 	// 게시글 조회
 	List<Student> searchStudentList(HashMap<String, Object> map);
+	
 	List<Emp> firstService();
-	
 	void stuUpdate();
-	List<Student> stuInfo();
 	
+	Student stuInfo();
 }
