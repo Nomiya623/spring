@@ -108,4 +108,20 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 
+	@Override
+	public HashMap<String, Object> editComment(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			boardMapper.updateComment(map);
+			resultMap.put("result", "success");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			// TODO: handle exception
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+
+
 }

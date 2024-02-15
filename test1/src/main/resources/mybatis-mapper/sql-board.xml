@@ -60,5 +60,11 @@
 		WHERE BOARDNO = #{boardNo}
 		ORDER BY CDATETIME DESC
 	</select>
-	
+	<update id="updateComment" parameterType="hashmap">
+    UPDATE TBL_COMMENT
+    SET 
+    	CMT = #{comment},
+        UDATETIME = SYSDATE
+    WHERE COMMENTNO = #{commentNo}
+	</update>
 </mapper>

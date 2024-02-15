@@ -186,7 +186,7 @@ var app = new Vue({
                 		alert("수정되었습니다.");
                 		self.fnView("list");
                 		self.comment = "";
-                		// location.href ="/boardList.do";
+                		
                 	} else {
                 		alert("다시 시도해주세요.");
                 	}

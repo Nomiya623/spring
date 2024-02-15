@@ -26,4 +26,6 @@ public interface BoardMapper {
 	void insertComment(HashMap<String, Object> map);
 	//뎃글리스트
 	List<Comment> selectCommentList(HashMap<String, Object> map);
+	
+	void updateComment(HashMap<String, Object> map);
 }
