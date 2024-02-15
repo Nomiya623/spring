@@ -38,28 +38,6 @@
 			</tr>
 		</table>
 		<table>
-			<tr v-for="item in commentList">
-				<th>작성자</th>
-				<td>{{item.userId}}</td>
-				<th>내용</th>
-				<td>
-					<template v-if="item.updateFlg">{{item.cmt}}</template>
-					<template v-else><textarea rows="3" cols="20" v-model="editComment"></textarea></template>
-				
-				</td>
-				<th>등록(수정) 일시</th>
-				<td>{{item.cdatetime}}</td>
-				<td>
-				<button v-if = "sessionId == item.userId && item.updateFlg " @click="fnEditBtn(item)">수정</button>
-				<button v-if = "!item.updateFlg" @click ="fnEditComm(item)">저장</button>
-				<button v-if = "!item.updateFlg" @click ="fnEditBtn(item)">취소</button>
-				
-				</td>
-				<td><button v-if = "sessionId == item.userId">삭제</button></td>
-			
-			</tr>
-		</table>
-		<table>
 			<tr>
 				<th>댓글</th>
 				<td>
@@ -88,14 +66,12 @@ var app = new Vue({
     	sessionId : "${userId}",
     	sessionStatus : "${userStatus}",
     	info : {},
-    	comment: "",
-    	commentList: [],
-    	editComment : ""
+    	comment: ""
     }   
     , methods: {
-    	fnView : function(str){
+    	fnView : function(){
             var self = this;
-            var nparmap = {boardNo : self.boardNo, str : str};
+            var nparmap = {boardNo : self.boardNo};
             $.ajax({
                 url:"boardDetail.dox",
                 dataType:"json",	
@@ -103,7 +79,6 @@ var app = new Vue({
                 data : nparmap,
                 success : function(data) { 
                 	self.info = data.info;
-                	self.commentList = data.commentList;
                 }
             }); 
         },
@@ -137,7 +112,6 @@ var app = new Vue({
         fnList : function(){
         	location.href ="/boardList.do";
         },
-    
         
         fnComment : function(){
         	var self = this;
@@ -154,38 +128,7 @@ var app = new Vue({
                 success : function(data) {
                 	if(data.result == "success"){
                 		alert("등록되었습니다.");
-                		self.fnView("list");
-                		self.comment = "";
-                		// location.href ="/boardList.do";
-                	} else {
-                		alert("다시 시도해주세요.");
-                	}
-                }
-            });
-        },
-        
-        fnEditBtn : function(item){
-        	var self = this;
-        	self.editComment = item.cmt;
-        	item.updateFlg = !item.updateFlg;
-        	
-        },
-        fnEditComm : function(item){
-        	var self = this;
-            var nparmap = {
-            		commentNo : item.commentNo, 
-            		comment : self.editComment
-            		};
-            $.ajax({
-                url:"editComment.dox",
-                dataType:"json",	
-                type : "POST", 
-                data : nparmap,
-                success : function(data) {
-                	if(data.result == "success"){
-                		alert("수정되었습니다.");
-                		self.fnView("list");
-                		self.comment = "";
+                		$.pageChange("/boardView.do", {});
                 		// location.href ="/boardList.do";
                 	} else {
                 		alert("다시 시도해주세요.");
@@ -197,7 +140,7 @@ var app = new Vue({
     }   
     , created: function () {
     	var self = this;
-		self.fnView("new");
+		self.fnView();
 	}
 });
 </script>

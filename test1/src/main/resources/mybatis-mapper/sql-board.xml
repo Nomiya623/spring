@@ -4,11 +4,25 @@
 
 <mapper namespace="com.example.test1.mapper.BoardMapper">
 	<select id="selectBoardList" parameterType="hashmap" resultType="com.example.test1.model.Board">
-		SELECT *
-		FROM TBL_BOARD B
-		INNER JOIN TBL_MEMBER M ON B.USERID = M.USERID
-		ORDER BY CDATETIME DESC
+		SELECT * 
+  		FROM TBL_BOARD B
+  		INNER JOIN TBL_MEMBER M ON B.USERID = M.USERID 
+  		LEFT JOIN 
+  			(SELECT BOARDNO, COUNT(*) AS COMM_CNT 
+  			FROM TBL_COMMENT
+  			GROUP BY BOARDNO)
+  			C ON B.BOARDNO = C.BOARDNO
+  		WHERE KIND=2
+  		<if test="keywordType == 'title'">
+  		AND TITLE LIKE '%' || #{keyword} || '%'
+  		</if>
+  		<if test="keywordType == 'user'">
+  		AND USERNAME LIKE '%' || #{keyword} || '%'
+  		</if>
+    	ORDER BY B.CDATETIME DESC
+    	
 	</select>
+	
 	<select id="selectBoardInfo" parameterType="hashmap" resultType="com.example.test1.model.Board">
 		SELECT *
 		FROM TBL_BOARD B
@@ -36,5 +50,15 @@
 			UDATETIME = SYSDATE
 		WHERE BOARDNO = #{boardNo}
 	</update>
+	<insert id="insertComment" parameterType="hashmap">
+		INSERT INTO TBL_COMMENT
+		VALUES(COMM_SEQ.NEXTVAL, #{boardNo}, #{comment}, #{userId}, 'N', null, SYSDATE, SYSDATE)
+	</insert>
+	<select id="selectCommentList" parameterType="hashmap" resultType="com.example.test1.model.Comment">
+		SELECT *
+		FROM TBL_COMMENT
+		WHERE BOARDNO = #{boardNo}
+		ORDER BY CDATETIME DESC
+	</select>
 	
 </mapper>

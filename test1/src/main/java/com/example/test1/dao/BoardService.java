@@ -13,4 +13,7 @@ public interface BoardService {
 	HashMap<String, Object> addBoard(HashMap<String, Object> map);
 	// 게시글 수정
 	HashMap<String, Object> editBoard(HashMap<String, Object> map);
+	// 댓글 등록
+	HashMap<String, Object> addComment(HashMap<String, Object> map);
+
 }

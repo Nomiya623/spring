@@ -1,6 +1,7 @@
 package com.example.test1.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -84,4 +85,14 @@ public class BoardController {
 		resultMap = boardService.editBoard(map);
 		return new Gson().toJson(resultMap);
 	}
+	
+	@RequestMapping(value = "/boardComment.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String boardComment(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.addComment(map);
+		return new Gson().toJson(resultMap);
+	}
+	 
+	
 }
