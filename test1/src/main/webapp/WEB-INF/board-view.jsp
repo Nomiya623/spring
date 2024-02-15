@@ -38,7 +38,7 @@
 			</tr>
 		</table>
 		<table>
-			<tr v-for="item in commentList">
+			<tr v-for="(item, index) in commentList">
 				<th>작성자</th>
 				<td>{{item.userId}}</td>
 				<th>내용</th>
@@ -50,9 +50,9 @@
 				<th>등록(수정) 일시</th>
 				<td>{{item.cdatetime}}</td>
 				<td>
-				<button v-if = "sessionId == item.userId && item.updateFlg " @click="fnEditBtn(item)">수정</button>
+				<button v-if = "sessionId == item.userId && item.updateFlg " @click="fnEditBtn(item, index)">수정</button>
 				<button v-if = "!item.updateFlg" @click ="fnEditComm(item)">저장</button>
-				<button v-if = "!item.updateFlg" @click ="fnEditBtn(item)">취소</button>
+				<button v-if = "!item.updateFlg" @click ="fnEditBtn(item, index)">취소</button>
 				
 				</td>
 				<td><button v-if = "sessionId == item.userId">삭제</button></td>
@@ -90,7 +90,8 @@ var app = new Vue({
     	info : {},
     	comment: "",
     	commentList: [],
-    	editComment : ""
+    	editComment : "",
+    	commentIndex : 0
     }   
     , methods: {
     	fnView : function(str){
@@ -164,8 +165,13 @@ var app = new Vue({
             });
         },
         
-        fnEditBtn : function(item){
+        fnEditBtn : function(item, index){
         	var self = this;
+        	/* for문 연산자로 사용가능  */
+        	if(self.commentIndex != index){
+        		self.commentList[self.commentIndex].updateFlg = true;	
+        	}
+        	self.commentIndex = index;
         	self.editComment = item.cmt;
         	item.updateFlg = !item.updateFlg;
         	
@@ -186,6 +192,7 @@ var app = new Vue({
                 		alert("수정되었습니다.");
                 		self.fnView("list");
                 		self.comment = "";
+                		$.pageChange("/boardView.do", {boardNo : item.boardNo});
                 		
                 	} else {
                 		alert("다시 시도해주세요.");
