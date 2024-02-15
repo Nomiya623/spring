@@ -15,4 +15,5 @@ public class Board {
 	
 	private String userName;
 	private int commCnt;
+	private String cDate;
 }

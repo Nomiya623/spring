@@ -99,8 +99,8 @@ div {
 				</span>
 				</a></td>
 				<td>{{item.hit}}</td>
-				<td>{{item.userName}}</td>
-				<td>{{item.cdatetime}}</td>
+				<td><a href="javascript:;" @click="fnUserDetail(item.userId)">{{item.userName}}</a></td>
+				<td>{{item.cDate}}</td>
 			</tr>
 		</table>
 		<div v-if="userId != '' && userId != undefined">
@@ -128,7 +128,7 @@ div {
 					type : "POST",
 					data : nparmap,
 					success : function(data) {
-						console.log(data.list);
+						console.log(data);
 						self.list = data.list;
 					}
 				});
@@ -140,6 +140,9 @@ div {
 			},
 			fnInsert : function() {
 				location.href = "/boardInsert.do";
+			},
+			fnUserDetail : function(userId) {
+				$.pageChange("/userDetail.do", {userId : userId});
 			}
 		},
 		created : function() {

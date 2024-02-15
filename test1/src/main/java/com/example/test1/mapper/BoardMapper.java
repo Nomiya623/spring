@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.test1.model.Board;
 import com.example.test1.model.Comment;
+import com.example.test1.model.User;
 
 @Mapper
 public interface BoardMapper {
@@ -28,4 +29,6 @@ public interface BoardMapper {
 	List<Comment> selectCommentList(HashMap<String, Object> map);
 	
 	void updateComment(HashMap<String, Object> map);
+	
+	User selectUserDetail(HashMap<String, Object> map);
 }

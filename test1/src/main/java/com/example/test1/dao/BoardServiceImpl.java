@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.test1.mapper.BoardMapper;
 import com.example.test1.model.Board;
 import com.example.test1.model.Comment;
+import com.example.test1.model.User;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -115,6 +116,23 @@ public class BoardServiceImpl implements BoardService{
 		try {
 			boardMapper.updateComment(map);
 			resultMap.put("result", "success");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			// TODO: handle exception
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+	}
+
+
+	@Override
+	public HashMap<String, Object> searchUserDetail(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			User user = boardMapper.selectUserDetail(map);
+			resultMap.put("result", "success");
+			resultMap.put("user", user);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			// TODO: handle exception

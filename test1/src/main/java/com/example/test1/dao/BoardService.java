@@ -18,6 +18,6 @@ public interface BoardService {
 	
 	HashMap<String, Object> editComment(HashMap<String, Object> map);
 	
-	
+	HashMap<String, Object> searchUserDetail(HashMap<String, Object> map);
 
 }

@@ -46,6 +46,12 @@ public class BoardController {
         return "/board-view"; 
     }
 	
+	@RequestMapping("/userDetail.do") 
+    public String userDetail(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		request.setAttribute("map", map);
+        return "/user-detail"; 
+    }
+	
 	@RequestMapping(value = "/boardList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String boardList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
@@ -102,5 +108,11 @@ public class BoardController {
 		return new Gson().toJson(resultMap);
 	}
 	 
-	
+	@RequestMapping(value = "/userDetail.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String userDetail(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = boardService.searchUserDetail(map);
+		return new Gson().toJson(resultMap);
+	}
 }
