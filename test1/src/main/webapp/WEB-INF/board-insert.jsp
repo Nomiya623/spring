@@ -56,6 +56,15 @@ div {
 </style>
 <body>
 	<div id="app">
+	
+		<tr>
+			<th>게시판선택</th>
+			<select v-model="kind">
+				<option value="1">공지사항</option>
+				<option value="2">자유게시판</option>
+				<option value="3">문의게시판</option>
+			</select>
+		</tr>	
 		<div>
 			제목 : <input type="text" v-model="title">
 		</div>
@@ -73,13 +82,18 @@ var app = new Vue({
     el: '#app',
     data: {
     	userId : "${userId}",
+    	kind : "${map.kind}",
     	title : "",
     	contents : ""
+    	
+    	
     }   
     , methods: {
     	fnInsert : function(){
             var self = this;
-            var nparmap = {userId : self.userId, title : self.title, contents : self.contents};
+            
+            var nparmap = {userId : self.userId, title : self.title, contents : self.contents, kind : self.kind};
+            
             $.ajax({
                 url:"boardInsert.dox",
                 dataType:"json",	

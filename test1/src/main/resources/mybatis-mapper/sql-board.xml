@@ -18,7 +18,7 @@
   			FROM TBL_COMMENT
   			GROUP BY BOARDNO)
   			C ON B.BOARDNO = C.BOARDNO  
-  		WHERE KIND=2
+  		WHERE KIND = #{kind}
   		<if test="keywordType == 'title'">
   		AND TITLE LIKE '%' || #{keyword} || '%'
   		</if>
@@ -46,7 +46,7 @@
 	</update>
 	<insert id="insertBoard" parameterType="hashmap">
 		INSERT INTO TBL_BOARD
-		VALUES(BBS_SEQ.NEXTVAL, #{title}, #{contents}, 0, #{userId}, 2, SYSDATE, SYSDATE)
+		VALUES(BBS_SEQ.NEXTVAL, #{title}, #{contents}, 0, #{userId}, #{kind}, SYSDATE, SYSDATE)
 	</insert>
 	<update id="updateBoard" parameterType="hashmap">
 		UPDATE TBL_BOARD
