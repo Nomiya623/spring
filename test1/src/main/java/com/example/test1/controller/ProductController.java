@@ -21,7 +21,7 @@ public class ProductController {
     // Product list
     @RequestMapping("/productList.do")
     public String productList(Model model) throws Exception {
-        model.addAttribute("products", productService.getAllProducts());
+        model.addAttribute("products", productService.getProductList(null));
         return "product-list";
     }
 

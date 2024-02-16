@@ -3,7 +3,14 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.test1.mapper.ProductMapper">
-	<select id="selectProductByItemNo" parameterType="string" resultType="com.example.model.Product">
-        SELECT * FROM TBL_PRODUCT WHERE ITEM_NO = #{itemNo}
+	<select id="selectProductList" parameterType="hashmap" resultType="com.example.model.Product">
+        SELECT ITEM_NAME, ITEM_NO
+        FROM TBL_PRODUCT
+    </select>
+    <select id="selectProduct" parameterType="hashmap" resultType="com.example.model.Product">
+        SELECT * 
+        FROM TBL_PRODUCT 
+        WHERE ITEM_NO = #{itemNo}
+        WHERE PRICE >= #{price}
     </select>
 </mapper>
