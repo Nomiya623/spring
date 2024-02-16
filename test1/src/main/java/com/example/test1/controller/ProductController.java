@@ -1,77 +1,83 @@
 package com.example.test1.controller;
-
-import java.util.HashMap;
 import java.util.List;
-
+import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.example.test1.dao.BoardService;
 import com.example.test1.dao.ProductService;
-import com.example.test1.model.Product;
 import com.google.gson.Gson;
 
 @Controller
-@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    // List all products
-    @GetMapping("/list")
-    public String listProducts(Model model) {
-        model.addAttribute("products", productService.findAllProducts());
-        return "productList";
+    // Product list
+    @RequestMapping("/productList.do")
+    public String productList(Model model) throws Exception {
+        model.addAttribute("products", productService.getAllProducts());
+        return "product-list";
     }
 
-    // Show product detail
-    @GetMapping("/detail/{itemNo}")
-    public String productDetail(@PathVariable String itemNo, Model model) {
-        model.addAttribute("product", productService.findProductByItemNo(itemNo));
-        return "productDetail";
+    // Navigate to Product Insert page
+    @RequestMapping("/productInsert.do")
+    public String productInsert(Model model) throws Exception {
+        return "product-insert";
     }
 
-    // Show form for new product
-    @GetMapping("/add")
-    public String showAddForm(Model model) {
-        model.addAttribute("product", new Product());
-        return "productForm";
+    // Navigate to Product Update page
+    @RequestMapping("/productUpdate.do")
+    public String productUpdate(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        request.setAttribute("map", map);
+        return "product-update";
     }
 
-    // Save new product
-    @PostMapping("/save")
-    public String saveProduct(@ModelAttribute Product product) {
-        if (product.getItemNo() == null) {
-            productService.addProduct(product);
-        } else {
-            productService.editProduct(product);
-        }
-        return "redirect:/product/list";
+    // Product Detail View
+    @RequestMapping("/productView.do")
+    public String productView(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+        request.setAttribute("map", map);
+        return "product-view";
     }
 
-    // Show form for editing a product
-    @GetMapping("/edit/{itemNo}")
-    public String showEditForm(@PathVariable String itemNo, Model model) {
-        model.addAttribute("product", productService.findProductByItemNo(itemNo));
-        return "productForm";
+    // AJAX: Insert Product
+    @RequestMapping(value = "/productInsert.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String productInsert(@RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap = productService.addProduct(map);
+        return new Gson().toJson(resultMap);
     }
 
-    // Delete a product
-    @GetMapping("/delete/{itemNo}")
-    public String deleteProduct(@PathVariable String itemNo) {
-        productService.removeProductByItemNo(itemNo);
-        return "redirect:/product/list";
+    // AJAX: Update Product
+    @RequestMapping(value = "/productUpdate.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String productUpdate(@RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap = productService.editProduct(map);
+        return new Gson().toJson(resultMap);
+    }
+
+    // AJAX: Delete Product
+    @RequestMapping(value = "/productRemove.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String productRemove(@RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap = productService.removeProduct(map);
+        return new Gson().toJson(resultMap);
+    }
+
+    // AJAX: Fetch Product Details
+    @RequestMapping(value = "/productDetail.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String productDetail(@RequestParam HashMap<String, Object> map) throws Exception {
+        HashMap<String, Object> resultMap = new HashMap<>();
+        resultMap = productService.getProductDetail(map);
+        return new Gson().toJson(resultMap);
     }
 }

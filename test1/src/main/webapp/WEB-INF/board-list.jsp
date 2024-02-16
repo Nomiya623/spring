@@ -106,7 +106,7 @@
 			<select v-model="keywordType">
 				<option value="title">제목</option>
 				<option value="user">작성자</option>
-			</select> 검색 : <input type="text" placeholder="검색어 입력" v-model="keyword"
+			</select> 
 				@keyup.enter="fnList">
 			<button @click="fnList">검색</button>
 		</div>
