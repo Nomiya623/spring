@@ -25,39 +25,48 @@
 	<div id="app">
 		<table>
 			<tr>
-				<th width="20%">제목</th>
-				<td width="80%">{{info.title}}</td>
-			</tr>
-			<tr>
+				<th>번호</th>
 				<th>작성자</th>
-				<td>{{info.userName}}</td>
+				<th width="50%">내용</th>
+				<th>등록(수정)일시</th>
+				<th>수정</th>
+				<th>삭제</th>
 			</tr>
-			<tr>
-				<th>내용</th>
-				<td>{{info.contents}}</td>
-			</tr>
+			<template v-for="(item, index) in commentList">
+				<tr v-if="item.pCommentNo == 0">
+					<th>{{item.commentNo}}</th>
+					<th>{{item.userId}}</th>
+					<td>
+						<template v-if="item.updateFlg">{{item.cmt}}</template>
+						<template v-else><textarea rows="3" cols="20" v-model="editComment"></textarea></template>
+					</td>
+					<td>{{item.udatetime}}</td>
+					<td>
+						<button v-if="sessionId == item.userId && item.updateFlg" @click="fnEditBtn(item, index)">수정</button>
+						<button v-if="!item.updateFlg" @click="fnEditComm(item)">저장</button>
+						<button v-if="!item.updateFlg" @click="fnEditBtn(item, index)">취소</button>
+					</td>
+					<td><button v-if="sessionId == item.userId">삭제</button></td>
+				</tr>
+				<template v-for="(item2, index) in pCommentList">
+					<tr v-if="item.commentNo == item2.pCommentNo">
+						<th> ㄴ> </th>
+						<th>{{item2.userId}}</th>
+						<td>
+							<template v-if="item2.updateFlg">{{item2.cmt}}</template>
+							<template v-else><textarea rows="3" cols="20" v-model="editComment"></textarea></template>
+						</td>
+						<td>{{item2.udatetime}}</td>
+						<td>
+							<button v-if="sessionId == item2.userId && item2.updateFlg" @click="fnEditBtn(item2, index)">수정</button>
+							<button v-if="!item.updateFlg" @click="fnEditComm(item2)">저장</button>
+							<button v-if="!item.updateFlg" @click="fnEditBtn(item2, index)">취소</button>
+						</td>
+						<td><button v-if="sessionId == item2.userId">삭제</button></td>
+					</tr>
+				</template>
+			</template>
 		</table>
-		<table>
-			<tr v-for="(item, index) in commentList">
-				<th>작성자</th>
-				<td>{{item.userId}}</td>
-				<th>내용</th>
-				<td>
-					<template v-if="item.updateFlg">{{item.cmt}}</template>
-					<template v-else><textarea rows="3" cols="20" v-model="editComment"></textarea></template>
-				
-				</td>
-				<th>등록(수정) 일시</th>
-				<td>{{item.cdatetime}}</td>
-				<td>
-				<button v-if = "sessionId == item.userId && item.updateFlg " @click="fnEditBtn(item, index)">수정</button>
-				<button v-if = "!item.updateFlg" @click ="fnEditComm(item)">저장</button>
-				<button v-if = "!item.updateFlg" @click ="fnEditBtn(item, index)">취소</button>
-				
-				</td>
-				<td><button v-if = "sessionId == item.userId">삭제</button></td>
-			
-			</tr>
 		</table>
 		<table>
 			<tr>

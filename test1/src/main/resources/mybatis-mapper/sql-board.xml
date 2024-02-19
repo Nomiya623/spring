@@ -78,5 +78,16 @@
         FROM TBL_MEMBER
         WHERE USERID = #{userId}
     </select>
-	
+	<select id="selectCommentList" parameterType="hashmap" resultType="com.example.test1.model.Comment">
+		SELECT *
+		FROM TBL_COMMENT
+		WHERE BOARDNO = #{boardNo} AND PCOMMENTNO IS NULL
+		ORDER BY CDATETIME ASC
+	</select>
+	<select id="selectPCommentList" parameterType="hashmap" resultType="com.example.test1.model.Comment">
+		SELECT *
+		FROM TBL_COMMENT
+		WHERE BOARDNO = #{boardNo} AND PCOMMENTNO IS NOT NULL
+		ORDER BY CDATETIME ASC
+	</select>
 </mapper>
