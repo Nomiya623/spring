@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.test1.mapper.ProductMapper">
+
+    <insert id="insertProduct" parameterType="com.example.model.Product">
+        INSERT INTO TBL_PRODUCT (ITEM_NO, ITEM_NAME, PRICE, CONTENTS, TRANS_INFO)
+        VALUES (#{itemNo}, #{itemName}, #{price}, #{contents}, #{transInfo})
+    </insert>
+
+    <update id="updateProduct" parameterType="com.example.model.Product">
+        UPDATE TBL_PRODUCT SET ITEM_NAME=#{itemName}, PRICE=#{price},
+        CONTENTS=#{contents}, TRANS_INFO=#{transInfo} WHERE ITEM_NO = #{itemNo}
+    </update>
+
+    <delete id="deleteProduct" parameterType="string">
+        DELETE FROM TBL_PRODUCT WHERE ITEM_NO = #{itemNo}
+    </delete>
+
+    <select id="selectProductByItemNo" parameterType="string" resultType="com.example.model.Product">
+        SELECT * FROM TBL_PRODUCT WHERE ITEM_NO = #{itemNo}
+    </select>
+
+    <select id="selectAllProducts" resultType="com.example.model.Product">
+        SELECT * FROM TBL_PRODUCT
+    </select>
+
+</mapper>
