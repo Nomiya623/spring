@@ -123,7 +123,7 @@
 				<td colspan="5"> 검색된 데이터 없음 </td>
 			</tr>
 			<tr v-for="(item, index) in list">
-				<td><input type="checkbox" name="board" v-model="selectList" :value="item.boardNo"></td>
+				<td><input type="radio" name="board" v-model="selectBoardNo" :value="item.boardNo"></td>
 				<td>{{item.boardNo}}</td>
 				<td><a href="javascript:;" @click="fnView(item.boardNo)">{{item.title}}
 						<span v-if="item.commCnt != 0" style="color: blue;">
@@ -149,7 +149,7 @@
 			list : [],
 			keyword : "",
 			keywordType : "title",
-			selectList : [],
+			selectBoardNo : "",
 			kind : 1
 			
 		},
@@ -157,7 +157,6 @@
 			fnList : function(kind) {
 				var self = this;
 				self.kind = kind;
-				self.selectList = [];
 				var nparmap = {
 					keyword : self.keyword,
 					keywordType : self.keywordType,
@@ -191,24 +190,20 @@
 				if(!confirm("정말 삭제하시겠습니까?")){
 					return;
 				}
-				
-				for(var i=0; i<self.selectList.length; i++){
-					var nparmap = {
-							boardNo : self.selectList[i]
-						};
-						$.ajax({
-							url : "boardRemove.dox",
-							dataType : "json",
-							type : "POST",
-							data : nparmap,
-							success : function(data) {
-		                        console.log(data);
-		                        self.fnList(self.kind);
-		                        
-							}
-						});
-				}
-				
+				var nparmap = {
+					boardNo : self.selectBoardNo
+				};
+				$.ajax({
+					url : "boardRemove.dox",
+					dataType : "json",
+					type : "POST",
+					data : nparmap,
+					success : function(data) {
+                        console.log(data);
+                        self.fnList(self.kind);
+                        
+					}
+				});
 			},
 			fnUserDetail : function(userId) {
 				$.pageChange("/userDetail.do", {
