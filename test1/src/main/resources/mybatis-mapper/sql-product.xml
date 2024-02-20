@@ -3,14 +3,32 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.test1.mapper.ProductMapper">
-	<select id="selectProductList" parameterType="hashmap" resultType="com.example.model.Product">
-        SELECT ITEM_NAME, ITEM_NO
-        FROM TBL_PRODUCT
-    </select>
-    <select id="selectProduct" parameterType="hashmap" resultType="com.example.model.Product">
-        SELECT * 
-        FROM TBL_PRODUCT 
-        WHERE ITEM_NO = #{itemNo}
-        WHERE PRICE >= #{price}
-    </select>
+	<select id="selectProductList" parameterType="hashmap" resultType="com.example.test1.model.Product">
+		SELECT *
+		FROM TBL_PRODUCT
+	</select>
+	<select id="selectProductInfo" parameterType="hashmap" resultType="com.example.test1.model.Product">
+		SELECT *
+		FROM TBL_PRODUCT
+		WHERE ITEM_NO = #{itemNo}
+	</select>
+	<insert id="insertProduct" parameterType="hashmap">
+		INSERT INTO TBL_PRODUCT
+		VALUES
+			(#{itemNo}, #{itemName}, #{price}, 0, 0, #{contents}, 'N', #{transInfo})	
+	</insert>
+	<update id="updateProduct" parameterType="hashmap">
+		UPDATE TBL_PRODUCT
+		SET
+			ITEM_NAME = #{itemName},
+			PRICE = #{price},
+			CONTENTS = #{contents},
+			TRANS_INFO = #{transInfo} 
+		WHERE ITEM_NO = #{itemNo}
+	</update>
+	<delete id="deleteProduct" parameterType="hashmap">
+		DELETE
+		FROM TBL_PRODUCT
+		WHERE ITEM_NO = #{itemNo}
+	</delete>
 </mapper>

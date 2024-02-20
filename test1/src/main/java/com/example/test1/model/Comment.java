@@ -9,10 +9,11 @@ public class Comment {
 	private String cmt;
 	private String userId;
 	private String deleteYn;
-	private Integer pcommentNo;
-	private String cdatetime;
-	private String udatetime;
+	private int pCommentNo;
+	private String cDateTime;
+	private String uDateTime;
 	
 	private String userName;
+	
 	private boolean updateFlg = true;
 }

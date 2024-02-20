@@ -8,7 +8,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
-	<title>첫번째 페이지</title>
+	<title>차트 연습</title>
 </head>
 <style>
 </style>
@@ -20,7 +20,6 @@
 	</div>
 </body>
 </html>
-
 <script type="text/javascript">
 var app = new Vue({ 
     el: '#app',
@@ -54,31 +53,32 @@ var app = new Vue({
             },
           },
           xaxis: {
-            categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+            categories: [],
           }
         },
-        list : []
     }   
     , methods: {
     	fnList : function(){
             var self = this;
             var nparmap = {};
             $.ajax({
-                url:"shoesList.dox",
+                url:"chartList.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	self.list = data.list;
                 	var shoesList = [];
                 	var tShirtList = [];
+                	var monthList = [];
                 	for(var i=0; i<data.list.length; i++){
                 		if(data.list[i].name == "신발"){
                 			shoesList.push(data.list[i].value);
                 		} else {
                 			tShirtList.push(data.list[i].value);
+                			monthList.push(data.list[i].month);
                 		}
                 	}
+                	console.log(monthList);
                 	self.series.push({
                         name: "신발",
                         data: shoesList
@@ -87,11 +87,12 @@ var app = new Vue({
                         name: "티셔츠",
                         data: tShirtList
                     });
+                	self.chartOptions.xaxis.categories.push(monthList);
                 }
             }); 
         } 
     }   
-    , created: function () {
+    , created: function() {
     	var self = this;
 		self.fnList();
 	}
