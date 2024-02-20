@@ -45,6 +45,7 @@
 		WHERE BOARDNO = #{boardNo}
 	</update>
 	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyProperty="BOARDNO" keyColumn="BOARDNO">
+	<!--hashmap에다가 뒤돌리고 싶을때 쓰임  -->
 		INSERT INTO TBL_BOARD
 		VALUES(BBS_SEQ.NEXTVAL, #{title}, #{contents}, 0, #{userId}, #{kind}, SYSDATE, SYSDATE)
 	</insert>
