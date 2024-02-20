@@ -107,7 +107,7 @@
 				<option value="title">제목</option>
 				<option value="user">작성자</option>
 			</select> 
-				@keyup.enter="fnList">
+				 <input type="text" v-model="keyword" @keyup.enter="fnList(kind)" placeholder="검색어 입력">
 			<button @click="fnList">검색</button>
 		</div>
 		<table>

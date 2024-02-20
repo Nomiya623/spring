@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.test1.mapper.BoardMapper;
 import com.example.test1.model.Board;
+import com.example.test1.model.BoardFile;
 import com.example.test1.model.Comment;
 import com.example.test1.model.User;
 
@@ -38,10 +39,12 @@ public class BoardServiceImpl implements BoardService{
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		boardMapper.updateHit(map); // 조회수 증가
 		Board board = boardMapper.selectBoardInfo(map); // 게시글 상세 조회
+		List<BoardFile> fileList = boardMapper.boardFileList(map);
 		
 		List<Comment> commentList = boardMapper.selectCommentList(map); 
 		
 		resultMap.put("info", board);
+		resultMap.put("fileList", fileList);
 		resultMap.put("commentList", commentList);
 		resultMap.put("result", "success");
 		return resultMap ;
@@ -69,6 +72,9 @@ public class BoardServiceImpl implements BoardService{
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			boardMapper.insertBoard(map);
+			/* boardMapper.insertBoardFile(map); */
+			System.out.println(map.get("BOARDNO"));
+			resultMap.put("boardNo", map.get("BOARDNO"));
 			resultMap.put("result", "success");
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -139,6 +145,23 @@ public class BoardServiceImpl implements BoardService{
 			resultMap.put("result", "fail");
 		}
 		return resultMap;
+	}
+
+
+	@Override
+	public HashMap<String, Object> addBoardFile(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			boardMapper.insertBoardFile(map);
+			resultMap.put("result", "success");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			// TODO: handle exception
+			resultMap.put("result", "fail");
+		}
+		return resultMap;
+		
 	}
 
 

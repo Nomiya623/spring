@@ -32,7 +32,7 @@ public class UserController {
 	
 	@RequestMapping("/login.do") 
     public String login(Model model) throws Exception{
-
+		System.out.println("test");
         return "/login"; 
     }
 	

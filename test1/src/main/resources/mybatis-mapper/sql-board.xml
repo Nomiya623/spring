@@ -44,10 +44,15 @@
 			HIT = HIT + 1
 		WHERE BOARDNO = #{boardNo}
 	</update>
-	<insert id="insertBoard" parameterType="hashmap">
+	<insert id="insertBoard" parameterType="hashmap" useGeneratedKeys="true" keyProperty="BOARDNO" keyColumn="BOARDNO">
 		INSERT INTO TBL_BOARD
 		VALUES(BBS_SEQ.NEXTVAL, #{title}, #{contents}, 0, #{userId}, #{kind}, SYSDATE, SYSDATE)
 	</insert>
+	<insert id="insertBoardFile" parameterType="hashmap">
+		INSERT INTO TBL_BOARDFILE
+		VALUES(BBS_SEQ.NEXTVAL, #{boardNo}, #{path}, #{fileName}, #{orgName},  #{fileSize},  #{etc})
+	</insert>
+	
 	<update id="updateBoard" parameterType="hashmap">
 		UPDATE TBL_BOARD
 		SET
@@ -60,12 +65,12 @@
 		INSERT INTO TBL_COMMENT
 		VALUES(COMM_SEQ.NEXTVAL, #{boardNo}, #{comment}, #{userId}, 'N', null, SYSDATE, SYSDATE)
 	</insert>
-	<select id="selectCommentList" parameterType="hashmap" resultType="com.example.test1.model.Comment">
+	<!-- <select id="selectCommentList" parameterType="hashmap" resultType="com.example.test1.model.Comment">
 		SELECT *
 		FROM TBL_COMMENT
 		WHERE BOARDNO = #{boardNo}
 		ORDER BY CDATETIME DESC
-	</select>
+	</select> -->
 	<update id="updateComment" parameterType="hashmap">
     UPDATE TBL_COMMENT
     SET 
@@ -89,5 +94,12 @@
 		FROM TBL_COMMENT
 		WHERE BOARDNO = #{boardNo} AND PCOMMENTNO IS NOT NULL
 		ORDER BY CDATETIME ASC
+	</select>
+	<select id="boardFileList" parameterType="hashmap" resultType="com.example.test1.model.BoardFile">
+		SELECT 
+			B.*,
+			FILEPATH || FILENAME AS PATH
+		FROM TBL_BOARDFILE B
+		WHERE BOARDNO = #{boardNo}
 	</select>
 </mapper>

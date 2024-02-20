@@ -67,7 +67,14 @@ div {
 		</tr>	
 		<div>
 			제목 : <input type="text" v-model="title">
+			<tr>
+				<td width="30%">파일</td>
+				<td width="70%">
+					<input type="file" id="file1" name="file1" accept=".jpg, .png, .gif">
+				</td>
+			</tr>
 		</div>
+		
 		<div>
 			내용 : <textarea rows="5" cols="40" v-model="contents"></textarea>
 		</div>
@@ -92,7 +99,11 @@ var app = new Vue({
     	fnInsert : function(){
             var self = this;
             
-            var nparmap = {userId : self.userId, title : self.title, contents : self.contents, kind : self.kind};
+            var nparmap = {userId : self.userId, 
+            				title : self.title,
+            				contents : self.contents, 
+            				kind : self.kind
+            };
             
             $.ajax({
                 url:"boardInsert.dox",
@@ -102,13 +113,38 @@ var app = new Vue({
                 success : function(data) { 
                 	if(data.result == "success"){
                 		alert("작성되었음");
-                		location.href = "/boardList.do";
+                		
+                		/* console.log(data.boardNo); */
+                		var form = new FormData();
+               	        form.append( "file1",  $("#file1")[0].files[0] );
+               	     	form.append( "boardNo",  data.boardNo);
+                   		self.upload(form);
+                		//1. 기존 처럼 게시글 작성하되 pk값 리턴 값 받기
+                		//data.boardNo => pk
+                   		location.href = "/boardList.do";
+                   		
                 	} else {
                 		alert("오류 발생");
                 	}
                 }
             }); 
-        } 
+        }
+    
+	 // 파일 업로드
+    , upload : function(form){
+    	var self = this;
+    	console.log(form);
+         $.ajax({
+             url : "/fileUpload.dox"
+           , type : "POST"
+           , processData : false
+           , contentType : false
+           , data : form
+           , success:function(response) { 
+        	   
+           }	           
+       });
+	}
     }   
     , created: function () {
     	var self = this;
