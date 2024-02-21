@@ -27,6 +27,14 @@
 			<button @click="fnGetList">검색</button>
 		</div>
 		<div>학년 : <input type="text" v-model="grade"> </div>
+		
+	<div>
+        <label><input type="checkbox" v-model="dept" value="컴퓨터정보"> 컴퓨터정보</label>
+        <label><input type="checkbox" v-model="dept" value="기계"> 기계</label>
+        <label><input type="checkbox" v-model="dept" value="전기전자"> 전기전자</label>
+        <button @click="fnGetList">검색</button>
+    </div>
+		
 		<table border="1">
 			<tr>
 				<th>학번</th>
@@ -59,12 +67,17 @@ var app = new Vue({
     data: {
 		list : [],
 		grade : "",
-		keyword : ""
+		keyword : "",
+		dept : ["컴퓨터정보", "기계", "전기전자"]
     }   
     , methods: {
     	fnGetList : function(){
             var self = this;
-            var nparmap = {keyword : self.keyword};
+            console.log(self.dept);
+            var nparmap = {
+            		keyword : self.keyword,
+            		dept : JSON.stringify(self.dept)	
+            };
             $.ajax({
                 url:"stu/list.dox",
                 dataType:"json",	

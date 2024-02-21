@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.test1.dao.BoardService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 @Controller
@@ -82,6 +84,13 @@ public class BoardController {
 	@ResponseBody
 	public String boardRemove(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		if(map.containsKey("boardNoList")) {
+			String json = map.get("boardNoList").toString(); //Object 형으로 받고 있기 때문에 오류, 문자열으로 리턴
+			ObjectMapper mapper = new ObjectMapper();
+			List<Object> list = mapper.readValue(json, new TypeReference<List<Object>>(){});
+			map.put("list", list);
+		}
+		
 		resultMap = boardService.removeBoard(map);
 		return new Gson().toJson(resultMap);
 	}

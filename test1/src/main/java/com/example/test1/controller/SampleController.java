@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.test1.dao.SampleService;
 import com.example.test1.model.Student;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 @Controller
@@ -37,6 +39,12 @@ public class SampleController {
 	@ResponseBody
 	public String searchBbsList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		String json = map.get("dept").toString(); //Object 형으로 받고 있기 때문에 오류, 문자열으로 리턴
+		ObjectMapper mapper = new ObjectMapper();
+		List<Object> deptList = mapper.readValue(json, new TypeReference<List<Object>>(){});
+		map.put("deptList", deptList);
+	
 		List<Student> list = sampleService.searchStuList(map);
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);

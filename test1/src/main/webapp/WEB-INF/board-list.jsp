@@ -112,7 +112,7 @@
 		</div>
 		<table>
 			<tr>
-				<th>선택</th>
+				<th><input type="checkbox" @click="fnAllCheck"></th>
 				<th width="7%">번호</th>
 				<th width="40%">제목</th>
 				<th width="8%">조회수</th>
@@ -190,11 +190,11 @@
 				var self = this;
 				if(!confirm("정말 삭제하시겠습니까?")){
 					return;
-				}
+				};
 				
-				for(var i=0; i<self.selectList.length; i++){
 					var nparmap = {
-							boardNo : self.selectList[i]
+							boardNoList : JSON.stringify(self.selectList),
+							message : "테스트 메세지"
 						};
 						$.ajax({
 							url : "boardRemove.dox",
@@ -202,24 +202,40 @@
 							type : "POST",
 							data : nparmap,
 							success : function(data) {
-		                        console.log(data);
+								alert("삭제되었습니다");
+		                       
 		                        self.fnList(self.kind);
 		                        
 							}
 						});
-				}
+				
 				
 			},
 			fnUserDetail : function(userId) {
 				$.pageChange("/userDetail.do", {
 					userId : userId
 				});
-			}
+			},
 			
-			/* kind: function(newKind){
-				this.kind = newKind;
-                this.fnList(); 
-			} */
+			fnAllCheck: function(event) {
+			    var self = this;
+			    /* self.allCheck = !allCheck;
+			    if(self.allCheck){
+			    	self.selectList = [];
+			    	for(var i=0; i<self.list.lenght; i++){
+			    		self.selectList.push(self.list[i].boardNo);
+			    	}
+			    }
+			    */
+			    if(event.target.checked) {
+			        
+			        self.selectList = self.list.map(item => item.boardNo);
+			    } else {
+			        
+			        self.selectList = [];
+			    }
+		
+			}
 		},
 		created : function() {
 			var self = this;

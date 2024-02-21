@@ -14,6 +14,7 @@
 			STU_HEIGHT,
 			STU_WEIGHT
 		FROM STUDENT
+   
 	</select>
 	<select id="empList" parameterType="hashmap" resultType="com.example.test1.model.Emp">
 		SELECT * FROM EMP
