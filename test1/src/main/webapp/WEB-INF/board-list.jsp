@@ -92,6 +92,30 @@
             background-color: #ddd;
             cursor: pointer;
         }
+         .pagination {
+        display: inline-block;
+        padding-left: 0;
+        margin: 20px 0;
+        border-radius: 4px;
+   		 }
+
+	    .pagination a {
+	        color: #007bff;
+	        float: left;
+	        padding: 8px 16px;
+	        text-decoration: none;
+	        transition: background-color .3s;
+	        border: 1px solid #ddd;
+	        margin: 0 4px;
+	    }
+	
+	    .pagination a.active {
+	        background-color: #4CAF50;
+	        color: white;
+	        border: 1px solid #4CAF50;
+	    }
+	
+	    .pagination a:hover:not(.active) {background-color: #ddd;}
 }
 </style>
 </head>
@@ -136,6 +160,11 @@
 				<td>{{item.cDate}}</td>
 			</tr>
 		</table>
+		<div class="pagination">
+			<template v-for="n in pageCount">
+				<a href="javascript:;" @click="fnPageList(n)">{{n}}</a>
+			</template>
+		</div>
 		<div v-if="userId != '' && userId != undefined">
 			<button @click="fnInsert">글쓰기</button>
 			<button @click="fnDelete">삭제</button>
@@ -153,7 +182,8 @@
 			keywordType : "title",
 			selectList : [],
 			boardList : ${boardList},
-			kind : 1
+			kind : 1,
+			pageCount : 1
 			/* allCheck : false */
 			
 		},
@@ -165,7 +195,9 @@
 				var nparmap = {
 					keyword : self.keyword,
 					keywordType : self.keywordType,
-					kind: kind
+					kind: kind,
+					startNum : 1,
+					lastNum : 10
 				};
 				$.ajax({
 					url : "boardList.dox",
@@ -173,8 +205,33 @@
 					type : "POST",
 					data : nparmap,
 					success : function(data) {
-                        console.log(data);
+                        console.log(data.cnt);
                         self.list = data.list;
+                        self.pageCount = Math.ceil(data.cnt/10);
+					}
+				});
+			},
+			fnPageList : function(num) {
+				var self = this;
+				self.selectList = [];
+				var startNum = ((num-1)*10)+1;
+				var lastNum = num*10;
+				var nparmap = {
+					keyword : self.keyword,
+					keywordType : self.keywordType,
+					kind: self.kind,
+					startNum : startNum,
+					lastNum : lastNum
+				};
+				$.ajax({
+					url : "boardList.dox",
+					dataType : "json",
+					type : "POST",
+					data : nparmap,
+					success : function(data) {
+                        console.log(data.cnt);
+                        self.list = data.list;
+                        self.pageCount = Math.ceil(data.cnt/10);
 					}
 				});
 			},

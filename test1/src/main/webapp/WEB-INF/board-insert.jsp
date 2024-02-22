@@ -96,7 +96,8 @@ var app = new Vue({
     	kind : "${map.kind}",
     	title : "",
     	contents : "",
-    	boardList : ${boardList}
+    	boardList : ${boardList},
+    	kind : ${kind}
     	
     	
     }   

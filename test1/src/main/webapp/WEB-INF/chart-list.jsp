@@ -40,15 +40,15 @@ var app = new Vue({
             enabled: false
           },
           stroke: {
-            curve: 'straight'
+            curve: 'smooth'
           },
           title: {
-            text: '월별 매출 추이',
-            align: 'left'
+            text: '월별 제품 매출 추이',
+            align: 'center'
           },
           grid: {
             row: {
-              colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+              colors: ['#f5f5f5', 'transparent'], // takes an array which will be repeated on columns
               opacity: 0.5
             },
           },
@@ -62,7 +62,7 @@ var app = new Vue({
             var self = this;
             var nparmap = {};
             $.ajax({
-                url:"chartList.dox",
+            	url:"chartList.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,

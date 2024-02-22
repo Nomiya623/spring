@@ -27,7 +27,9 @@ public class BoardServiceImpl implements BoardService{
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		String str = (String) map.get("str");
 		List<Board> list = boardMapper.selectBoardList(map);
+		int cnt = boardMapper.selectBoardListCnt(map);
 		resultMap.put("list", list);
+		resultMap.put("cnt", cnt);
 		resultMap.put("result", "success");
 		return resultMap;
 	}

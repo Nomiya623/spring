@@ -14,6 +14,8 @@ import com.example.test1.model.User;
 public interface BoardMapper {
 	// 게시글 목록
 	List<Board> selectBoardList(HashMap<String, Object> map);
+	
+	int selectBoardListCnt(HashMap<String, Object> map);
 	// 게시글 상세보기
 	Board selectBoardInfo(HashMap<String, Object> map);
 	// 게시글 삭제

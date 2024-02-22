@@ -44,7 +44,7 @@ public class BoardController {
 	
 	@RequestMapping("/boardInsert.do") 
     public String insert(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
-		
+		request.setAttribute("kind", map.get("kind"));
 		map.put("kind", "board");
 		
 		List<Code> codeList = codeService.searchCodeList(map);

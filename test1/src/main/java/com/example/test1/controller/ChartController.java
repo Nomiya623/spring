@@ -28,9 +28,22 @@ public class ChartController {
         return "/chart-list";
     }
 	
+	@RequestMapping("/chartList2.do") 
+    public String chartList2(Model model) throws Exception{
+
+        return "/chart-list2";
+    }
 	@RequestMapping(value = "/chartList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String chartList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = chartService.searchChartList(map);
+		return new Gson().toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/chartList2.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String chartList2(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap = chartService.searchChartList(map);
 		return new Gson().toJson(resultMap);
