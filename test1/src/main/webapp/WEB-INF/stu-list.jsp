@@ -29,9 +29,12 @@
 		<div>학년 : <input type="text" v-model="grade"> </div>
 		
 	<div>
-        <label><input type="checkbox" v-model="dept" value="컴퓨터정보"> 컴퓨터정보</label>
+        <!-- label><input type="checkbox" v-model="dept" value="컴퓨터정보"> 컴퓨터정보</label>
         <label><input type="checkbox" v-model="dept" value="기계"> 기계</label>
-        <label><input type="checkbox" v-model="dept" value="전기전자"> 전기전자</label>
+        <label><input type="checkbox" v-model="dept" value="전기전자"> 전기전자</label> -->
+        <label v-for="item in deptList">
+        	<input type="checkbox" :value="item.code" v-model="dept">{{item.name}}
+        </label>
         <button @click="fnGetList">검색</button>
     </div>
 		
@@ -57,6 +60,9 @@
 				<td><button @click="fnEdit(item.stuNo)">수정</button></td>
 				<td><button>삭제</button></td>
 			</tr>
+			<tr v-if="list.length == 0">
+				<td colspan="7"> 검색된 데이터 없음 </td>
+			</tr>
 		</table>
 	</div>
 </body>
@@ -68,7 +74,8 @@ var app = new Vue({
 		list : [],
 		grade : "",
 		keyword : "",
-		dept : ["컴퓨터정보", "기계", "전기전자"]
+		deptList : ${deptList}, 
+		dept : []
     }   
     , methods: {
     	fnGetList : function(){

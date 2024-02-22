@@ -60,10 +60,14 @@ div {
 		<tr>
 			<th>게시판선택</th>
 			<select v-model="kind">
+				<option value="">:: 선택 ::</option>
+				<option v-for="item in boardList" :value="item.code" >{{item.name}}</option>
+			</select>
+			<!-- <select v-model="kind">
 				<option value="1">공지사항</option>
 				<option value="2">자유게시판</option>
 				<option value="3">문의게시판</option>
-			</select>
+			</select> -->
 		</tr>	
 		<div>
 			제목 : <input type="text" v-model="title">
@@ -91,7 +95,8 @@ var app = new Vue({
     	userId : "${userId}",
     	kind : "${map.kind}",
     	title : "",
-    	contents : ""
+    	contents : "",
+    	boardList : ${boardList}
     	
     	
     }   

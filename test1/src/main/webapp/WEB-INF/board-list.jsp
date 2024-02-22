@@ -97,10 +97,12 @@
 </head>
 <body>
 	<div id="app">
+		
 		<li>
-			<ul :class = "[kind==1 ? 'select-tab' : 'tab']" @click="fnList(1)">공지사항</ul>
+			<ul v-for="item in boardList" :class = "[kind==item.code ? 'select-tab' : 'tab']" @click="fnList(item.code)">{{item.name}}</ul>
+			<!-- <ul :class = "[kind==1 ? 'select-tab' : 'tab']" @click="fnList(1)">공지사항</ul>
 			<ul :class = "[kind==2 ? 'select-tab' : 'tab']" @click="fnList(2)">자유게시판</ul>
-			<ul :class = "[kind==3 ? 'select-tab' : 'tab']" @click="fnList(3)">문의게시판</ul>
+			<ul :class = "[kind==3 ? 'select-tab' : 'tab']" @click="fnList(3)">문의게시판</ul> -->
 		</li>
 		<div>
 			<select v-model="keywordType">
@@ -108,7 +110,7 @@
 				<option value="user">작성자</option>
 			</select> 
 				 <input type="text" v-model="keyword" @keyup.enter="fnList(kind)" placeholder="검색어 입력">
-			<button @click="fnList">검색</button>
+			<button @click="fnList(kind)">검색</button>
 		</div>
 		<table>
 			<tr>
@@ -120,7 +122,7 @@
 				<th width="20%">작성일</th>
 			</tr>
 			<tr v-if="list.length == 0">
-				<td colspan="5"> 검색된 데이터 없음 </td>
+				<td colspan="6"> 검색된 데이터 없음 </td>
 			</tr>
 			<tr v-for="(item, index) in list">
 				<td><input type="checkbox" name="board" v-model="selectList" :value="item.boardNo"></td>
@@ -150,7 +152,9 @@
 			keyword : "",
 			keywordType : "title",
 			selectList : [],
+			boardList : ${boardList},
 			kind : 1
+			/* allCheck : false */
 			
 		},
 		methods : {

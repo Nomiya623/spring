@@ -8,13 +8,14 @@
 		SELECT
 		STU_NO,
 		STU_NAME,
-		STU_DEPT,
+		C.NAME AS STU_DEPT,
 		STU_GRADE,
 		STU_CLASS,
 		STU_GENDER,
 		STU_HEIGHT,
 		STU_WEIGHT
-		FROM STUDENT
+		FROM STUDENT S
+		INNER JOIN TBL_CODE C ON S.STU_DEPT = C.CODE AND C.KIND = 'dept'
 		WHERE STU_NO LIKE '%' || #{keyword} || '%'
 		
 		<if test="deptList.size != 0">

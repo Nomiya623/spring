@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.test1.dao.BoardService;
+import com.example.test1.dao.CodeService;
+import com.example.test1.model.Code;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -28,16 +30,25 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
+	@Autowired
+	CodeService codeService;
 	
 	@RequestMapping("/boardList.do") 
-    public String main(Model model) throws Exception{
-
+    public String main(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map ) throws Exception{
+		map.put("kind", "board");
+		
+		List<Code> codeList = codeService.searchCodeList(map);
+		request.setAttribute("boardList", new Gson().toJson(codeList));
         return "/board-list"; 
     }
 	
 	@RequestMapping("/boardInsert.do") 
-    public String insert(Model model) throws Exception{
-
+    public String insert(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		
+		map.put("kind", "board");
+		
+		List<Code> codeList = codeService.searchCodeList(map);
+		request.setAttribute("boardList", new Gson().toJson(codeList));
         return "/board-insert"; 
     }
 	

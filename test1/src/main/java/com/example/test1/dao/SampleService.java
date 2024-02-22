@@ -3,6 +3,7 @@ package com.example.test1.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.test1.model.Code;
 import com.example.test1.model.Emp;
 import com.example.test1.model.Student;
 
@@ -14,4 +15,6 @@ public interface SampleService {
 	void addStu(HashMap<String, Object> map); // 학생 추가
 	
 	Student searchId(HashMap<String, Object> map); // 아이디 중복 체크
+	
+	
 }

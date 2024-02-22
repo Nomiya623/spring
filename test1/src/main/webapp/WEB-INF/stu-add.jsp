@@ -16,7 +16,14 @@
 			<button @click="fnCheck">중복체크</button>
 		</div>
 		<div>이름 : <input type="text" v-model="stuInfo.stuName"></div>
-		<div>학과 : <input type="text" v-model="stuInfo.stuDept"></div>
+		
+		<div>학과 : 
+			<select v-model="stuInfo.stuDept">
+				<option value="">:: 선택 ::</option>
+				<option v-for="item in deptList" :value="item.code" >{{item.name}}</option>
+			</select>
+		</div>
+		
 		<div>학년 : <input type="text" v-model="stuInfo.stuGrade"></div>
 		<div>성별 : 
 			<input type="radio" name="stuGender" value="M" v-model="stuInfo.stuGender">남
@@ -35,7 +42,8 @@ var app = new Vue({
 					stuDept : "",
 					stuGrade : "",
 					stuGender : "M"
-				 }
+				 },
+				 deptList : ${deptList}
     }   
     , methods: {
     	fnAdd : function(){

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.test1.mapper.SampleMapper;
+import com.example.test1.model.Code;
 import com.example.test1.model.Student;
 
 @Service
@@ -39,6 +40,7 @@ public class SampleServiceImpl implements SampleService{
 		// TODO Auto-generated method stub
 		return sampleMapper.selectId(map);
 	}
-	
+
+
 	
 }

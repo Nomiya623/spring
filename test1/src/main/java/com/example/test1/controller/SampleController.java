@@ -3,6 +3,8 @@ package com.example.test1.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.test1.dao.CodeService;
 import com.example.test1.dao.SampleService;
+import com.example.test1.model.Code;
 import com.example.test1.model.Student;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,15 +27,25 @@ public class SampleController {
 	@Autowired
 	SampleService sampleService;
 	
+	@Autowired
+	CodeService codeService;
+	
 	@RequestMapping("/stu-list.do") 
-    public String stuInfo(Model model) throws Exception{
-
+    public String stuInfo(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		map.put("kind", "dept");
+		
+		List<Code> codeList = codeService.searchCodeList(map);
+		request.setAttribute("deptList", new Gson().toJson(codeList));
         return "/stu-list"; 
     }
 	
 	@RequestMapping("/stu-add.do") 
-    public String add(Model model) throws Exception{
-
+    public String add(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map) throws Exception{
+		
+		map.put("kind", "dept");
+		
+		List<Code> codeList = codeService.searchCodeList(map);
+		request.setAttribute("deptList", new Gson().toJson(codeList));
         return "/stu-add"; 
     }
 	
