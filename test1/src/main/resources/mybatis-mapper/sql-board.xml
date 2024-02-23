@@ -7,12 +7,24 @@
 		SELECT *
 		FROM(
 			SELECT B.BOARDNO, B.TITLE, B.HIT, B.USERID, M.USERNAME, C.COMM_CNT,
-				ROW_NUMBER() OVER (ORDER BY B.CDATETIME DESC) AS PAGE,
+			
+			<if test="type == 'HIT' and order == 'DESC'" >
+				ROW_NUMBER() OVER (ORDER BY HIT DESC) AS PAGE,
+			</if>
+			<if test="type == 'HIT' and order == 'ASC'" >
+				ROW_NUMBER() OVER (ORDER BY HIT ASC) AS PAGE,
+			</if>
+			<if test="type == 'CDATE'  and order == 'ASC'" >
+				ROW_NUMBER() OVER (ORDER BY CDATETIME ASC) AS PAGE,
+			</if>
+			<if test="type == 'CDATE'  and order == 'DESC'" >
+				ROW_NUMBER() OVER (ORDER BY CDATETIME DESC) AS PAGE,
+			</if>
+			
 	        CASE 
 	        	WHEN TO_CHAR(SYSDATE, 'YYYY-MM-DD') = TO_CHAR(CDATETIME, 'YYYY-MM-DD')
 	        	THEN TO_CHAR(CDATETIME, 'HH24:MI:SS')
-	        ELSE 
-	        	TO_CHAR(CDATETIME, 'YYYY-MM-DD HH24:MI:SS')
+	        	ELSE TO_CHAR(CDATETIME, 'YYYY-MM-DD HH24:MI:SS')
 	        END AS CDATE
 	  		FROM TBL_BOARD B
 	  		INNER JOIN TBL_MEMBER M ON B.USERID = M.USERID 

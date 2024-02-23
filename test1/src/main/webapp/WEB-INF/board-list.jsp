@@ -135,15 +135,29 @@
 			</select> 
 				 <input type="text" v-model="keyword" @keyup.enter="fnList(kind)" placeholder="검색어 입력">
 			<button @click="fnList(kind)">검색</button>
+			<!-- order by 5,10,20 paging list -->
+			<select v-model="searchCnt" @click="fnPageList(1)" style="float: right">
+				<option value="5">5개</option>
+				<option value="10">10개</option>
+				<option value="20">20개</option>
+			</select>
 		</div>
 		<table>
 			<tr>
 				<th><input type="checkbox" @click="fnAllCheck"></th>
 				<th width="7%">번호</th>
 				<th width="40%">제목</th>
-				<th width="8%">조회수</th>
+				<th width="8%">
+					<a v-if="order == 'DESC' && type =='HIT'" href="javascript:;" @click="fnOrder('HIT', 'ASC')">조회수▲</a><!--must be hidden  -->
+					<a v-else href="javascript:;" @click="fnOrder('HIT', 'DESC')">조회수▼</a>
+				</th>
 				<th width="15%">작성자</th>
-				<th width="20%">작성일</th>
+				
+				<th width="20%">
+					<a v-if="order == 'DESC' && type =='CDATE'" href="javascript:;" @click="fnOrder('CDATE', 'ASC')">작성일▲</a> <!--오름차순 -->
+					<a v-else href="javascript:;" @click="fnOrder('CDATE', 'DESC')">작성일▼</a><!--내림차순 -->
+				</th>
+				
 			</tr>
 			<tr v-if="list.length == 0">
 				<td colspan="6"> 검색된 데이터 없음 </td>
@@ -161,14 +175,32 @@
 			</tr>
 		</table>
 		<div class="pagination">
+		<a href="javascript:;" v-if="pageCount > 1 && nowPage > 1" @click="fnPageList(nowPage - 1)">&lt;</a>
 			<template v-for="n in pageCount">
-				<a href="javascript:;" @click="fnPageList(n)">{{n}}</a>
+				<a href="javascript:;" :class="{ 'active': nowPage === n }" @click="fnPageList(n)">{{ n }}</a>
 			</template>
+		<a href="javascript:;" v-if="pageCount > 1 && nowPage < pageCount" @click="fnPageList(nowPage + 1)">&gt;</a>	
 		</div>
 		<div v-if="userId != '' && userId != undefined">
 			<button @click="fnInsert">글쓰기</button>
 			<button @click="fnDelete">삭제</button>
 		</div>
+		<!-- sorOrder method -->
+		<!-- <div>
+		    <label>Sort By:</label>
+		    <select v-model="sortColumn">
+		        <option value="TITLE">Title</option>
+		        <option value="HIT">Hits</option>
+		        <option value="CDATE">Creation Date</option>
+		        Add other options as needed
+		    </select>
+		    <select v-model="sortOrder">
+		        <option value="ASC">Ascending</option>
+		        <option value="DESC">Descending</option>
+		    </select>
+		    <button @click="fnList(kind)">Sort</button>
+		</div> -->
+		
 	</div>
 </body>
 </html>
@@ -183,7 +215,13 @@
 			selectList : [],
 			boardList : ${boardList},
 			kind : 1,
-			pageCount : 1
+			nowPage : 1,
+			pageCount : 1,
+			searchCnt : 10,
+			type : "CDATE",
+			order : "DESC"
+			/* sortColumn: 'TITLE', // Default sort column
+	        sortOrder: 'ASC' // Default sort order */
 			/* allCheck : false */
 			
 		},
@@ -192,13 +230,19 @@
 				var self = this;
 				self.kind = kind;
 				self.selectList = [];
+			
 				var nparmap = {
 					keyword : self.keyword,
 					keywordType : self.keywordType,
 					kind: kind,
 					startNum : 1,
-					lastNum : 10
+					lastNum : 10,
+					type : self.type,
+					order : self.order
+					/* sortColumn: self.sortColumn, // Include sorting parameters
+	                sortOrder: self.sortOrder */
 				};
+				
 				$.ajax({
 					url : "boardList.dox",
 					dataType : "json",
@@ -214,14 +258,17 @@
 			fnPageList : function(num) {
 				var self = this;
 				self.selectList = [];
-				var startNum = ((num-1)*10)+1;
-				var lastNum = num*10;
+				self.nowPage = num; /* currentPage update */
+				var startNum = ((num-1)*self.searchCnt)+1;
+				var lastNum = num*self.searchCnt;
 				var nparmap = {
 					keyword : self.keyword,
 					keywordType : self.keywordType,
 					kind: self.kind,
 					startNum : startNum,
-					lastNum : lastNum
+					lastNum : lastNum,
+					type : self.type,
+					order : self.order
 				};
 				$.ajax({
 					url : "boardList.dox",
@@ -231,7 +278,7 @@
 					success : function(data) {
                         console.log(data.cnt);
                         self.list = data.list;
-                        self.pageCount = Math.ceil(data.cnt/10);
+                        self.pageCount = Math.ceil(data.cnt/self.searchCnt);
 					}
 				});
 			},
@@ -245,6 +292,36 @@
 				$.pageChange("/boardInsert.do", {
 					kind : self.kind
 				});
+			},
+			/* order */
+			fnOrder : function(type, order){
+				var self = this;
+				self.selectList = [];
+				self.type = type;
+				self.order = order;
+				var startNum = ((self.nowPage-1)*self.searchCnt)+1;
+				var lastNum = self.nowPage*self.searchCnt;
+				var nparmap = {
+					keyword : self.keyword,
+					keywordType : self.keywordType,
+					kind: self.kind,
+					startNum : startNum,
+					lastNum : lastNum,
+					type : type,
+					order : order
+				};
+				$.ajax({
+					url : "boardList.dox",
+					dataType : "json",
+					type : "POST",
+					data : nparmap,
+					success : function(data) {
+                        console.log(data.cnt);
+                        self.list = data.list;
+                        self.pageCount = Math.ceil(data.cnt/self.searchCnt);
+					}
+				});
+				
 			},
 			
 			fnDelete : function() {

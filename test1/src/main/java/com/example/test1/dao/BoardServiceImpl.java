@@ -24,6 +24,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public HashMap<String, Object> searchBoardList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
+		
+		/*
+		 * map.put("sortColumn", "TITLE"); // Specify the column to sort by
+		 * map.put("sortOrder", "ASC"); // Specify the sort order
+		 */        
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		String str = (String) map.get("str");
 		List<Board> list = boardMapper.selectBoardList(map);
