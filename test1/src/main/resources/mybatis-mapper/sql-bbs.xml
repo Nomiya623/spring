@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.test1.mapper.BBSMapper">
+	<select id="selectBBSList" parameterType="hashmap" resultType="com.example.test1.model.BBS">
+		SELECT BBS_NUM, TITLE, HIT, USER_ID, TO_CHAR(CDATETIME, 'YYYY-MM-DD HH24:MI:SS') AS CDATETIME, TO_CHAR(UDATETIME, 'YYYY-MM-DD HH24:MI:SS') AS UDATETIME
+        FROM TBL_BBS
+        ORDER BY BBS_NUM DESC
+	</select>
+	<insert id="insertBBS" parameterType="com.example.test1.model.BBS">
+        INSERT INTO TBL_BBS (BBS_NUM, TITLE, CONTENTS, HIT, USER_ID, CDATETIME, UDATETIME)
+        VALUES (BOARD_SEQ.NEXTVAL, #{title}, #{contents}, #{hit}, #{userId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+    </insert>
+	<update id="updateBBS" parameterType="com.example.test1.model.BBS">
+        UPDATE TBL_BBS
+        SET TITLE = #{title}, CONTENTS = #{contents}, HIT = #{hit}, USER_ID = #{userId}, UDATETIME = CURRENT_TIMESTAMP
+        WHERE BBS_NUM = #{bbsNum}
+    </update>
+	<delete id="removeBBS" parameterType="int" >
+		DELETE FROM TBL_BBS
+		WHERE BBS_NUM = #{bbsNum}
+		
+	</delete>
+</mapper>
