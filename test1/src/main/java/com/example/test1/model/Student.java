@@ -12,4 +12,8 @@ public class Student {
 	private String stuGender;
 	private String stuHeight;
 	private String stuWeight;
+	
+	private String si;
+	private String gu; 
+	private String dong;
 }

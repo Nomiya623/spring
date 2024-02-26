@@ -26,6 +26,40 @@ public class CodeServiceImpl implements CodeService{
 		}
 		return codeList;
 	}
+
+	@Override
+	public List<Code> searchSiList(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		List<Code> siList = null;
+		try {
+			siList = codeMapper.selectSiList(map);
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		return siList;
+	}
+
+	@Override
+	public List<Code> searchGuList(HashMap<String, Object> map) {
+		List<Code> guList = null;
+		try {
+			guList = codeMapper.selectGuList(map);
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		return guList;
+	}
+
+	@Override
+	public List<Code> searchDongList(HashMap<String, Object> map) {
+		List<Code> dongList = null;
+		try {
+			dongList = codeMapper.selectDongList(map);
+		} catch(Exception e){
+			System.out.println(e.getMessage());
+		}
+		return dongList;
+	}
 	
 	
 }

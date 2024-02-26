@@ -9,5 +9,29 @@
 		WHERE KIND = #{kind}
    
 	</select>
+	
+	<select id="selectSiList" parameterType="hashmap" resultType="com.example.test1.model.Code">
+		SELECT SI
+		FROM TBL_AREA
+		GROUP BY SI
+		ORDER BY SI
+	</select>
+	
+	<select id="selectGuList" parameterType="hashmap" resultType="com.example.test1.model.Code">
+		SELECT GU
+		FROM TBL_AREA
+		WHERE SI = #{si}
+		GROUP BY GU
+		ORDER BY GU
+	</select>
+	
+	<select id="selectDongList" parameterType="hashmap" resultType="com.example.test1.model.Code">
+		SELECT DONG
+		FROM TBL_AREA
+		WHERE GU = #{gu} AND SI = #{si}
+		GROUP BY DONG
+		ORDER BY DONG
+	</select>
+	
 
 </mapper>

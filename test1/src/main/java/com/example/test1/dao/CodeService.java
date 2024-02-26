@@ -10,4 +10,10 @@ import com.example.test1.model.Student;
 public interface CodeService {
 
 	List<Code> searchCodeList(HashMap<String, Object> map); // 학생 목록
+	
+	List<Code> searchSiList(HashMap<String, Object> map);
+	List<Code> searchGuList(HashMap<String, Object> map);
+	List<Code> searchDongList(HashMap<String, Object> map);
+	
+	
 }

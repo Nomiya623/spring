@@ -35,7 +35,14 @@ public class SampleController {
 		map.put("kind", "dept");
 		
 		List<Code> codeList = codeService.searchCodeList(map);
+		List<Code> siList = codeService.searchSiList(map);
+		List<Code> guList = codeService.searchSiList(map);
+		List<Code> dongList = codeService.searchSiList(map);
+		
 		request.setAttribute("deptList", new Gson().toJson(codeList));
+		request.setAttribute("siList", new Gson().toJson(siList));
+		request.setAttribute("guList", new Gson().toJson(guList));
+		request.setAttribute("dongList", new Gson().toJson(dongList));
         return "/stu-list"; 
     }
 	
@@ -63,7 +70,33 @@ public class SampleController {
 		resultMap.put("list", list);
 		return new Gson().toJson(resultMap);
 	}
-	
+	@RequestMapping(value = "/siList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String siList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		List<Code> siList = codeService.searchSiList(map);
+		resultMap.put("siList", siList);
+		return new Gson().toJson(resultMap);
+	}
+	@RequestMapping(value = "/guList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String guList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		List<Code> guList = codeService.searchGuList(map);
+		resultMap.put("guList", guList);
+		return new Gson().toJson(resultMap);
+	}
+	@RequestMapping(value = "/dongList.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String dongList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		List<Code> dongList = codeService.searchDongList(map);
+		resultMap.put("dongList", dongList);
+		return new Gson().toJson(resultMap);
+	}
 	@RequestMapping(value = "/stu/edit.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String edit(Model model, @RequestParam HashMap<String, Object> map) throws Exception {

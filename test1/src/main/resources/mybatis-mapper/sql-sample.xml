@@ -13,7 +13,10 @@
 		STU_CLASS,
 		STU_GENDER,
 		STU_HEIGHT,
-		STU_WEIGHT
+		STU_WEIGHT,
+		SI,
+		GU, 
+		DONG
 		FROM STUDENT S
 		INNER JOIN TBL_CODE C ON S.STU_DEPT = C.CODE AND C.KIND = 'dept'
 		WHERE STU_NO LIKE '%' || #{keyword} || '%'
@@ -42,8 +45,9 @@
 	<update id="updateStu" parameterType="hashmap">
 		UPDATE STUDENT
 		SET
-		STU_GRADE
-		= #{stuGrade}
+			SI = #{si},
+			GU = #{gu},
+			DONG = #{dong}
 		WHERE STU_NO = #{stuNo}
 	</update>
 

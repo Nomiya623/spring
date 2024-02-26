@@ -12,4 +12,11 @@ import com.example.test1.model.Student;
 public interface CodeMapper {
 	List<Code> selectCodeList(HashMap<String, Object> map);
 	
+	List<Code> selectSiList(HashMap<String, Object> map);
+	List<Code> selectGuList(HashMap<String, Object> map);
+	List<Code> selectDongList(HashMap<String, Object> map);
+	
+	
 }
+
+
