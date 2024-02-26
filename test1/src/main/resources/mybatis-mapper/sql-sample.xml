@@ -27,19 +27,20 @@
                 #{item}
             </foreach>
   		</if>
+  		
   		<if test="deptList.size == 0">
   			AND 1=2
   		</if>
-  		
-  		 <!-- <if test="keyword != null and keyword != ''">
-            AND (STU_NAME LIKE CONCAT('%', #{keyword}, '%') OR STU_NO LIKE CONCAT('%', #{keyword}, '%'))
+  		<if test="si != ''">
+            AND SI = #{si}
         </if>
-        <if test="selectedDepts != null and selectedDepts.size() > 0">
-            AND STU_DEPT IN
-            <foreach item="dept" collection="selectedDepts" open="(" separator="," close=")">
-                #{dept}
-            </foreach>
-        </if> -->
+        <if test="gu != ''">
+            AND GU = #{gu}
+        </if>
+        <if test="dong != ''">
+            AND DONG = #{dong}
+        </if>
+        
 	</select>
 
 	<update id="updateStu" parameterType="hashmap">

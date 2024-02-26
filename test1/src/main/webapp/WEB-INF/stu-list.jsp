@@ -44,7 +44,7 @@
 			    <option value="">:: 전체 ::</option>
 			    <option v-for="item in guList" :value="item.gu">{{ item.gu }}</option>
 			</select>
-			동/읍/면 : <select v-model="dong">
+			동/읍/면 : <select v-model="dong" @change="fnSiList">
 			    <option value="">:: 전체 ::</option>
 			    <option v-for="item in dongList" :value="item.dong">{{ item.dong }}</option>
 			</select>
@@ -108,10 +108,13 @@ var app = new Vue({
     , methods: {
     	fnGetList : function(){
             var self = this;
-            console.log(self.dept);
+            console.log(self.dept, self.si, self.gu, self.dong);
             var nparmap = {
             		keyword : self.keyword,
-            		dept : JSON.stringify(self.dept)
+            		dept : JSON.stringify(self.dept),
+            		si : self.si, 
+            		gu : self.gu, 
+            		dong : self.dong
             		
             };
             $.ajax({
@@ -139,7 +142,7 @@ var app = new Vue({
 	            data : nparmap,
 	            success : function(data) { 
 	            	self.siList = data.siList;
-	                
+	            	self.fnGetList();
 	            }
 	        });
 	    },
@@ -159,7 +162,7 @@ var app = new Vue({
                 success : function(data) { 
                 	self.guList = data.guList;
                 	self.fnDongList();
-	                
+                	self.fnGetList();
                 }
             });
         },
