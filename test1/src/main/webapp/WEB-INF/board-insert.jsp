@@ -6,6 +6,8 @@
 	<meta charset="UTF-8">
 	<script src="js/jquery.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"></script>
+	<script src="https://unpkg.com/vue2-editor@2.3.11/dist/index.js"></script>
 	<title>첫번째 페이지</title>
 </head>
 <style>
@@ -80,7 +82,7 @@ div {
 		</div>
 		
 		<div>
-			내용 : <textarea rows="5" cols="40" v-model="contents"></textarea>
+			내용 : <vue-editor v-model="contents"></vue-editor>
 		</div>
 		<div>
 			<button @click="fnInsert">저장</button>
@@ -88,7 +90,11 @@ div {
 	</div>
 </body>
 </html>
+
+
 <script type="text/javascript">
+Vue.use(Vue2Editor);
+const VueEditor = Vue2Editor.VueEditor;
 var app = new Vue({ 
     el: '#app',
     data: {
@@ -97,11 +103,14 @@ var app = new Vue({
     	title : "",
     	contents : "",
     	boardList : ${boardList},
-    	kind : ${kind}
+    	kind : ${kind}  
     	
     	
     }   
-    , methods: {
+    ,
+    components: {VueEditor}
+    ,
+    methods: {
     	fnInsert : function(){
             var self = this;
             

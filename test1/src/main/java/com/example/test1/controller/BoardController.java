@@ -35,8 +35,24 @@ public class BoardController {
 	
 	@RequestMapping("/boardList.do") 
     public String main(HttpServletRequest request, Model model, @RequestParam HashMap<String, Object> map ) throws Exception{
+		//  세션있는지 체크
+		// 세션 없으면 -> '접근할 수 없습니다' 문구 띄우구 내보내기
+		// 세션 있으면서 권한 맞으면
+		// 접속 시켜주기
+		/*
+		 * Object userSession = request.getSession().getAttribute("user"); // Assuming
+		 * 'user' is the session attribute for a logged-in user
+		 * 
+		 * if (userSession == null) { // If there's no user session, redirect to login
+		 * page with a message request.setAttribute("message",
+		 * "접근할 수 없습니다. 로그인이 필요합니다."); return "redirect:/login.do"; // Assuming there's
+		 * a mapping to "/login.do" that shows the login page } else { // Check user
+		 * permissions if necessary // Example: if
+		 * (!userSession.hasPermission("ACCESS_BOARD_LIST")) { //
+		 * request.setAttribute("message", "접근 권한이 없습니다."); // return
+		 * "redirect:/main.do"; // Or any appropriate page // }
+		 */
 		map.put("kind", "board");
-		
 		List<Code> codeList = codeService.searchCodeList(map);
 		request.setAttribute("boardList", new Gson().toJson(codeList));
         return "/board-list"; 

@@ -283,9 +283,16 @@
 				});
 			},
 			fnView : function(boardNo) {
-				$.pageChange("/boardView.do", {
-					boardNo : boardNo
-				});
+				var self = this;
+				if(self.userId != ""){
+					$.pageChange("/boardView.do", {
+						boardNo : boardNo
+					})
+				} else {
+					alert("로그인 후 접속해라");
+					$.pageChange("/login.do", {});
+				}
+				;
 			},
 			fnInsert : function() {
 				var self = this;

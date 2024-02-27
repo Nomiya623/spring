@@ -114,7 +114,8 @@
 			</tr>
 			<tr>
 				<th width="20%">내용</th>
-				<td>{{info.contents}}
+				<td>
+				<div v-html="info.contents"></div>
 				<div v-for="item in fileList">
 					<img :src="item.path">
 				</div>

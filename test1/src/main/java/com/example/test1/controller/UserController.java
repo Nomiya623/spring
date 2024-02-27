@@ -26,7 +26,11 @@ public class UserController {
 	
 	@RequestMapping("/main.do") 
     public String main(Model model) throws Exception{
-
+		String status = (String)session.getAttribute("userStatus");
+		if(status.equals("A")) {
+			return "redirect:boardList.do";
+		}
+		
         return "/main"; 
     }
 	
