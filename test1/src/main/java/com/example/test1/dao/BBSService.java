@@ -1,18 +1,10 @@
 package com.example.test1.dao;
 
 import java.util.HashMap;
-import java.util.List;
-
-
-import com.example.test1.model.BBS;
-
+// Service의 return 타입은 거의 무조건 HashMap이라고 생각하자
 public interface BBSService {
-	List<BBS> searchBBSList(HashMap<String, Object> map); 
-	
-	HashMap<String, Object> editBBS(HashMap<String, Object> map);
-	
-	HashMap<String, Object> addBBS(HashMap<String, Object> map);
-	
-	HashMap<String, Object> removeBBS(HashMap<String, Object> map);
-	
+	HashMap<String, Object> searchBBSList(HashMap<String, Object> map); // 게시판 목록
+	HashMap<String, Object> addBBS(HashMap<String, Object> map); // 게시판 작성
+	HashMap<String, Object> searchBBSInfo(HashMap<String, Object> map); // 게시판 상세 보기
+	HashMap<String, Object> removeBBS(HashMap<String, Object> map); // 게시판 상세 보기
 }

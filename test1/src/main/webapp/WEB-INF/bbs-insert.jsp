@@ -12,13 +12,12 @@
 </style>
 <body>
 	<div id="app">
-		 <h2>글쓰기</h2>
-    <form action="bbs-insert.do" method="post">
-        제목: <input type="text" name="title"><br>
-        내용:<br>
-        <textarea name="contents" rows="5" cols="50"></textarea><br>
-        <button type="submit">작성</button>
-    </form>
+		<div>제목: <input type="text" v-model="bbs.title"></div>
+		<div>
+			<div>내용: </div>
+			<textarea rows="15" cols="60" v-model="bbs.contents"></textarea>
+		</div>		
+		<button @click="fnInsert">작성</button>
 	</div>
 </body>
 </html>
@@ -26,23 +25,24 @@
 var app = new Vue({
     el: '#app',
     data: {
+    	bbs: {
     		title: "",
     		contents: ""
     	}
     }   
     , methods: {
-    	fnAdd: function(){
+    	fnInsert: function(){
             var self = this;
             var nparmap = self.bbs;
             $.ajax({
-                url:"bbs/insert.dox",
+                url:"bbs-insert.dox",
                 dataType:"json",
                 type: "POST",
                 data: nparmap,
                 success : function(data) {
                 	if(data.result == "success") {
                 		alert("작성되었습니다!")
-                		$.pageChange("/bbsList.do", {});
+                		$.pageChange("/bbs-list.do", {});
                 	} else {
                 		alert("문제가 발생하였습니다!")
                 	}

@@ -4,22 +4,28 @@
 
 <mapper namespace="com.example.test1.mapper.BBSMapper">
 	<select id="selectBBSList" parameterType="hashmap" resultType="com.example.test1.model.BBS">
-		SELECT BBS_NUM, TITLE, HIT, USER_ID, TO_CHAR(CDATETIME, 'YYYY-MM-DD HH24:MI:SS') AS CDATETIME, TO_CHAR(UDATETIME, 'YYYY-MM-DD HH24:MI:SS') AS UDATETIME
-        FROM TBL_BBS
-        ORDER BY BBS_NUM DESC
+		SELECT *
+		FROM TBL_BBS
 	</select>
-	<insert id="insertBBS" parameterType="com.example.test1.model.BBS">
-        INSERT INTO TBL_BBS (BBS_NUM, TITLE, CONTENTS, HIT, USER_ID, CDATETIME, UDATETIME)
-        VALUES (BOARD_SEQ.NEXTVAL, #{title}, #{contents}, #{hit}, #{userId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
-    </insert>
-	<update id="updateBBS" parameterType="com.example.test1.model.BBS">
-        UPDATE TBL_BBS
-        SET TITLE = #{title}, CONTENTS = #{contents}, HIT = #{hit}, USER_ID = #{userId}, UDATETIME = CURRENT_TIMESTAMP
-        WHERE BBS_NUM = #{bbsNum}
-    </update>
-	<delete id="removeBBS" parameterType="int" >
-		DELETE FROM TBL_BBS
+	<insert id="insertBBS" parameterType="hashmap">
+		INSERT INTO TBL_BBS
+		VALUES
+			(BOARD_SEQ.NEXTVAL, #{title}, #{contents}, '0', 'user11', SYSDATE, SYSDATE)
+	</insert>
+	<select id="selectBBSInfo" parameterType="hashmap" resultType="com.example.test1.model.BBS">
+		SELECT *
+		FROM TBL_BBS
 		WHERE BBS_NUM = #{bbsNum}
-		
+	</select>
+	<update id="updateHit" parameterType="hashmap">
+		UPDATE TBL_BBS
+		SET
+			HIT = HIT + 1
+		WHERE BBS_NUM = #{bbsNum}
+	</update>
+	<delete id="deleteBBS" parameterType="hashmap">
+		DELETE
+		FROM TBL_BBS
+		WHERE BBS_NUM = #{bbsNum}
 	</delete>
 </mapper>

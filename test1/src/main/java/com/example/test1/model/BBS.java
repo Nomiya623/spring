@@ -9,7 +9,6 @@ public class BBS {
 	private String contents;
 	private int hit;
 	private String userId;
-	private String cDate;
-	private String uDate;
-	
+	private String cDateTime;
+	private String uDateTime;
 }
