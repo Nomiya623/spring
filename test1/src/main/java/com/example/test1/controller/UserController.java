@@ -54,6 +54,13 @@ public class UserController {
         return "/user-edit"; 
     }
 	
+	@RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String searchBbsList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap = userService.searchUser(map);
+		return new Gson().toJson(resultMap);
+	}
 	
 	// 인증 코드 요청
     @RequestMapping(value = "/request-auth-code", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -99,13 +106,7 @@ public class UserController {
         return new Gson().toJson(resultMap);
     }
     
-	@RequestMapping(value = "/login.dox", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public String searchBbsList(Model model, @RequestParam HashMap<String, Object> map) throws Exception {
-		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap = userService.searchUser(map);
-		return new Gson().toJson(resultMap);
-	}
+	
 	//회원가입 요청처리
 	@RequestMapping(value = "/join", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody

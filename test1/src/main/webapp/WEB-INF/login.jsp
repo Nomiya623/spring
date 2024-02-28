@@ -20,7 +20,11 @@
 		</div>
 		<div>
 			<button @click="login">로그인</button>
-			<button @click="join">회원가입</button>
+			<button>회원가입</button>
+			<a id="kakao-login-btn" href="javascript:;" @click= "fnKakaoLogin">
+  			<img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="111" 
+    		alt="카카오 로그인 버튼" />
+			</a>
 		</div>
 	</div>
 </body>
@@ -54,11 +58,16 @@ var app = new Vue({
                 	}
                 }
             }); 
-        } 
+        },
+        fnKakaoLogin: function(){
+        	location.href="https://kauth.kakao.com/oauth/authorize?client_id=" + "24c91e49c9fadfcadd37f2738226cf25" + "&redirect_uri=" + "http://localhost:8080/kakaoLogin.do" + "&response_type=code";
+
+        }
     }   
     , created: function () {
     	var self = this;
     	//
 	}
 });
+
 </script>
