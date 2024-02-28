@@ -20,7 +20,7 @@
 		</div>
 		<div>
 			<button @click="login">로그인</button>
-			<button>회원가입</button>
+			<button @click="join">회원가입</button>
 		</div>
 	</div>
 </body>
@@ -35,17 +35,22 @@ var app = new Vue({
     , methods: {
     	login : function(){
             var self = this;
-            var nparmap = {id : self.id, pwd : self.pwd};
+            var nparmap = {
+            		id : self.id, 
+            		pwd : self.pwd};
             $.ajax({
                 url:"login.dox",
                 dataType:"json",	
                 type : "POST", 
                 data : nparmap,
                 success : function(data) { 
-                	alert(data.message);
-                	if(data.result == "success"){
+                	alert(response.message)
+                	if(response.result == "success"){
                 		// 페이지 이동
+                		alert(response.message);
                 		location.href="/main.do";
+                	} else {
+                		alert(response.message);
                 	}
                 }
             }); 

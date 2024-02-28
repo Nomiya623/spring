@@ -18,4 +18,37 @@
 		VALUES(#{id}, #{pwd}, #{name}, #{phone}, #{gender}, 0, 'U' )
 	</insert>
 	
+	
+	<!-- 인증 코드 저장 -->
+	<update id="saveAuthCode" parameterType="hashmap">
+	    UPDATE TBL_MEMBER
+	    SET AUTH_CODE = #{authCode},
+	        AUTH_CODE_EXPIRES = DATE_ADD(NOW(), INTERVAL 5 MINUTE)
+	    WHERE PHONE = #{phone}
+	</update>
+	
+	<!-- 인증 코드 검증 -->
+	<select id="verifyAuthCode" parameterType="hashmap" resultType="hashmap">
+	    SELECT COUNT(*) AS isValid
+	    FROM TBL_MEMBER
+	    WHERE PHONE = #{phone}
+	    AND AUTH_CODE = #{authCode}
+	    AND AUTH_CODE_EXPIRES > NOW()
+	</select>
+	
+	<!-- 인증 코드 사용 후 삭제 (인증 코드 만료 처리) -->
+	<update id="clearAuthCode" parameterType="hashmap">
+	    UPDATE TBL_MEMBER
+	    SET AUTH_CODE = NULL,
+	        AUTH_CODE_EXPIRES = NULL
+	    WHERE PHONE = #{phone}
+	</update>
+	
+	<!-- 비밀번호 리셋 -->
+	<update id="resetPassword" parameterType="hashmap">
+	    UPDATE TBL_MEMBER
+	    SET PWD = #{newPassword}
+	    WHERE PHONE = #{phoneNumber}
+	</update>
+	
 </mapper>
