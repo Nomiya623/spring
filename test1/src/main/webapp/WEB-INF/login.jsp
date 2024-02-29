@@ -6,26 +6,38 @@
 	<meta charset="UTF-8">
 	<script src="js/jquery.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<title>첫번째 페이지</title>
+	<title>로그인</title>
 </head>
 <style>
+	fieldset {
+		width: 300px;
+	}
+	span {
+		margin-left: 15px;
+	}
+	div {
+		margin: 10px;
+	}
 </style>
 <body>
 	<div id="app">
-		<div>
-			아이디 : <input type="text" v-model="id">
-		</div>
-		<div>
-			비밀번호 : <input type="password" v-model="pwd">
-		</div>
-		<div>
-			<button @click="login">로그인</button>
-			<button>회원가입</button>
-			<a id="kakao-login-btn" href="javascript:;" @click= "fnKakaoLogin">
-  			<img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="111" 
-    		alt="카카오 로그인 버튼" />
-			</a>
-		</div>
+		<fieldset>
+			<legend>로그인</legend>
+			<div>
+				아이디: <span><input type="text" v-model="id"></span>
+			</div>
+			<div>
+				비밀번호: <input type="password" v-model="pwd" @keyup.enter="fnLogin">
+			</div>
+			<div>
+				<button @click="fnLogin">로그인</button>
+				<button @click="fnJoin">회원가입</button>
+				<button @click="fnFindPassword">비밀번호 찾기</button>
+				<div>
+					<a href="javascript:;" @click="fnKakao" style="cursor: pointer; margin: -10px;"><img alt="" src="../img/kakao_login_medium.png"></a>
+				</div>
+			</div>
+		</fieldset>
 	</div>
 </body>
 </html>
@@ -33,41 +45,40 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-    	id : "",
-    	pwd : ""
+    	id: "",
+    	pwd: ""
     }   
     , methods: {
-    	login : function(){
+    	fnLogin : function(){
             var self = this;
-            var nparmap = {
-            		id : self.id, 
-            		pwd : self.pwd};
+            var nparmap = {id : self.id, pwd : self.pwd};
             $.ajax({
                 url:"login.dox",
-                dataType:"json",	
-                type : "POST", 
+                dataType:"json",
+                type : "POST",
                 data : nparmap,
-                success : function(data) { 
-                	alert(response.message)
-                	if(response.result == "success"){
+                success : function(data) {
+                	alert(data.message);
+                	if(data.result == "success") {
                 		// 페이지 이동
-                		alert(response.message);
-                		location.href="/main.do";
-                	} else {
-                		alert(response.message);
+                		location.href= "/main.do";
                 	}
                 }
             }); 
         },
-        fnKakaoLogin: function(){
-        	location.href="https://kauth.kakao.com/oauth/authorize?client_id=" + "24c91e49c9fadfcadd37f2738226cf25" + "&redirect_uri=" + "http://localhost:8080/kakaoLogin.do" + "&response_type=code";
-
-        }
+        fnJoin : function(){
+			location.href="/join.do";
+        },
+        fnFindPassword: function() {
+			var self = this;
+			location.href="/find-password.do";
+		},
+		fnKakao: function() {
+			location.href="https://kauth.kakao.com/oauth/authorize?client_id=" + "24c91e49c9fadfcadd37f2738226cf25" + "&redirect_uri=" + "http://localhost:8080/kakaoLogin.do" + "&response_type=code";
+		}
     }   
     , created: function () {
     	var self = this;
-    	//
 	}
 });
-
 </script>

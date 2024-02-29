@@ -6,18 +6,19 @@
 	<meta charset="UTF-8">
 	<script src="js/jquery.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<title>첫번째 페이지</title>
+	<title>메인 페이지</title>
 </head>
 <style>
 </style>
 <body>
 	<div id="app">
-		<button @click="fnBoard">게시판이동</button>
-		<button @click="fnUpdate">회원정보수정</button>
+		<button @click="fnUpdate">회원정보 수정</button>
+		<button @click="fnEnterBoard">게시판 입장</button>
 		<div>
-			<button v-if="!authFlg" @click="fnSmsTest">문자테스트</button>
-			<input v-if="authFlg" v-model="number" :placeholder="timer">
-			<button v-if="authFlg" @click="fnSmsAuth">인증</button>
+			<button v-if="smsFlg" @click="fnSMS">문자 테스트</button>
+			<template v-if="!smsFlg">
+				<input type="text" v-model="inputNum" :placeholder="timeString"><button @click="fnAuth">인증</button>
+			</template>
 		</div>
 	</div>
 </body>
@@ -26,67 +27,67 @@
 var app = new Vue({ 
     el: '#app',
     data: {
-    	authFlg : false,
-    	number : "",
-    	authNum : "",
-    	timer : "",
-		isRunning : false,
-		count : 240,
+    	inputNum: "",
+    	getNum: "",
+    	smsFlg: true,
+        time: 30000, 
+        timeString: '0:30'
     }   
     , methods: {
-    	fnUpdate : function(){
-            location.href="/user/edit.do";
+    	fnUpdate: function(){
+            location.href = "/user/edit.do";
         },
-        fnBoard : function(){
-            location.href="/boardList.do";
-        },
-        fnSmsTest : function(){
-        	var self = this;
+        fnEnterBoard: function() {
+        	$.pageChange("/boardList.do", {});
+		},
+		fnSMS: function() {
+			var self = this;
             var nparmap = {};
             $.ajax({
                 url:"send-one",
-                dataType:"json",	
-                type : "POST", 
+                dataType:"json",
+                type : "POST",
                 data : nparmap,
-                success : function(data) { 
-                	if(data.response.statusCode == "2000"){
-                		alert("전송되었습니다.");
-                		self.authFlg = true;
-                		self.authNum = data.number;
-                		setInterval(self.fnTimer, 1000);
+                success : function(data) {
+                	console.log(data);
+                	if(data.response.statusCode == "2000") {
+	                	alert("문자 전송 완료");
+	                	self.getNum = data.number;
+	                	self.smsFlg = false;
+	                	self.fnTimer();
                 	} else {
-                		alert("실패!");
+                		alert("문자 전송 실패");
                 	}
                 }
-            });   
-        },
-        fnSmsAuth : function(){
-        	var self = this;
-        	if(self.number == self.authNum){
-        		alert("인증되었음!");
-        	} else {
-        		alert("실패!");
-        	}
-        },
-        fnTimer : function(){
-        	var self = this;
-        	var minutes, seconds;
-      	    minutes = parseInt(self.count / 60, 10);
-      	    seconds = parseInt(self.count % 60, 10);
+            });
+		},
+		fnAuth: function() {
+			var self = this;
+			if(self.inputNum == self.getNum) {
+				alert("인증 완료");
+			} else {
+				alert("인증 실패");
+			}
+		},
+		fnTimer: function() {
+			var self = this;
+			var playTime = setInterval(function() {
+				self.time -= 1000; // 1초씩 감소
+                var min = Math.floor(self.time / (60 * 1000)); // 분 계산
+                var sec = Math.floor((self.time % (60 * 1000)) / 1000); // 초 계산
 
-      	    minutes = minutes < 10 ? "0" + minutes : minutes;
-      	    seconds = seconds < 10 ? "0" + seconds : seconds;
-      	    
-      	    self.timer = minutes + ":" + seconds;
-			
-      	    if (--self.count < 0) {
-      	      alert("시간초과");
-      	      self.authFlg = false;
-      	      self.count = 180;
-      	      location.reload(true);
-     	  	}
-        }
-    }   
+                // 초와 분을 문자열로 조합하여 출력
+                self.timeString = min + ':' + (sec < 10 ? '0' + sec : sec);
+
+                // 시간이 다 되었을 때 clearInterval 호출
+                if (self.time === 0) {
+                    clearInterval(playTime);
+                    alert("시간 초과");
+                    self.smsFlg = true;
+                }
+			}, 1000);
+		}
+    }
     , created: function () {
     	var self = this;
 	}
