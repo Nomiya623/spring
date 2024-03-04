@@ -8,63 +8,75 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>회원가입</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
 
-        #app {
-            max-width: 600px;
-            margin: 50px auto;
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+    #app {
+        max-width: 400px; /* Adjusted for consistency */
+        margin: auto;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-        #app input[type="text"],
-        #app input[type="password"],
-        #app input[type="radio"] {
-            width: 150px;
-            padding: 6px;
-            margin: 6px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
+    #app input[type="text"],
+    #app input[type="password"],
+    #app input[type="radio"],
+    #app button,
+    #app input[type="text"].phone {
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
 
-        #app input[type="radio"] {
-            width: auto;
-            margin-right: 5px;
-        }
+    #app input[type="radio"] {
+        width: auto;
+        margin-right: 5px;
+    }
 
-        #app input[type="text"].phone {
-            width: 100px;
-            margin-right: 10px;
-        }
+    #app input[type="text"].phone {
+        width: calc(33% - 20px); /* Adjusted for 3 inputs in one line */
+        margin-right: 10px;
+    }
 
-        #app button {
-            width: 100px;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+    #app button {
+        width: auto; /* Adjusted for better layout */
+        padding: 10px 15px; /* More padding for a better look */
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        display: block; /* Make buttons block level for full width */
+        margin-top: 20px; /* More space above the button */
+    }
 
-        #app button:hover {
-            background-color: #0056b3;
-        }
-        
-        #app span {
-			display: inline-block;
-            width: 110px;
-        }
-    </style>
+    #app button:hover {
+        background-color: #0056b3;
+    }
+    
+    #app span {
+        display: inline-block;
+        width: 110px; /* Consistent label width */
+    }
+
+    #app div {
+        margin-bottom: 15px; /* Spacing between form groups */
+    }
+</style>
+
 </head>
 <body>
     <div id="app">

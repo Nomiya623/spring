@@ -9,17 +9,53 @@
 	<title>로그인</title>
 </head>
 <style>
+	body {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+		background-color: #f5f5f5;
+	}
 	fieldset {
 		width: 300px;
+		border-radius: 5px;
+		border: 1px solid #ccc;
+		padding: 20px;
+		background-color: #fff;
 	}
-	span {
-		margin-left: 15px;
+	legend {
+		padding: 0 10px;
+		background-color: #fff;
+		border-radius: 5px;
+	}
+	input[type="text"], input[type="password"] {
+		width: calc(100% - 22px); /* Adjust based on padding */
+		padding: 10px;
+		margin: 5px 0;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+	}
+	button {
+		width: 100%;
+		padding: 10px;
+		margin: 5px 0;
+		border: none;
+		border-radius: 5px;
+		background-color: #4CAF50;
+		color: white;
+		cursor: pointer;
+	}
+	button:hover {
+		background-color: #45a049;
 	}
 	div {
-		margin: 10px;
+		margin: 10px 0;
+	}
+	a img {
+		width: 100%; /* Adjust as necessary, or remove for original size */
+		max-width: 200px; /* Limit size */
 	}
 </style>
-<body>
 	<div id="app">
 		<fieldset>
 			<legend>로그인</legend>
